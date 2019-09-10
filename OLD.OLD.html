@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DTR Control Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="images/clock.ico" />
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/css/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/bootswatch/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="css/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body id="body2">
+  <!---------------------------------------------------------------->
+  <!------------------------ BODY CONTAINER ------------------------>
+  <!---------------------------------------------------------------->
+
+  <div class="container mt-4">
+    <h1 class="text-center" id="headerDisplay">Daily Time Record</h2>
+  </div>
+  <!---------------------------------------------------------------->
+  <!------------------------ FILTER TABLE ------------------------>
+  <!---------------------------------------------------------------->
+  <div class="container mt-3">
+    <form class="filterForm">
+      <table class="table table-borderless bg-light table-sm" id="filterTable">
+        <tr class="form-inline">
+          <th class="w-50">
+            Filter:
+            <select class="custom-select custom-select-sm" id="chooseFilter">
+              <option selected="" disabled="">Choose Filter</option>
+              <option value="1">HRIS ID</option>
+              <option value="2">BRANCH</option>
+              <option value="3">EMPLOYEE NAME</option>
+            </select>
+            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="Input Text">
+          </th>
+          <th class="w-50">
+            Branch:
+            <input type="text" class="form-control form-control-sm" id="filterBranch" placeholder="Branch Code">
+          </th>
+        </tr>
+        <tr class="form-inline ">
+          <th class="w-50">
+            Date:
+            <input type="date" class="form-control form-control-sm" id="date1">
+            <i class="fa fa-calendar"></i>
+            <input type="date" class="form-control form-control-sm" id="date2">
+          </th>
+          <th class="w-50">
+            Log Type:
+            <input type="checkbox" class="form-control form-control-sm" id="logTypeIn" checked>
+            In
+            &nbsp;&nbsp;
+            <input type="checkbox" class="form-control form-control-sm" id="logTypeOut" checked>
+            Out
+          </th>
+        </tr>
+        <tr>
+          <th class="text-center">
+            <button type="submit" class="btn btn-primary" id="btnSearch"><i class="fa fa-search"></i> SEARCH</button>
+          </th>
+        </tr>
+        <tr class="form-inline">
+          <th class="w-50">
+            <h4 id="hrisIdPopup">HRIS ID: 13070</h4>
+          </th>
+          <th class="w-50 text-right">
+            <h6>Sort By:
+              <select class="custom-select custom-select-sm mx-1" id="chooseFilter">
+                <option selected="" disabled="">Choose Filter</option>
+                <option value="1">HRIS ID</option>
+                <option value="2">BRANCH</option>
+                <option value="3">EMPLOYEE NAME</option>
+              </select>
+              <!-- <select class="custom-select custom-select-sm mx-1" id="ascendingdescending" disabled>
+									<option value="Ascending">Ascending</option>
+									<option value="Descending">Descending</option>
+								</select> -->
+            </h6>
+          </th>
+        </tr>
+      </table>
+    </form>
+
+    <hr class="hrBreakLine">
+
+    <!---------------------------------------------------------------->
+    <!------------------------ TABLE RESULT ------------------------>
+    <!---------------------------------------------------------------->
+    <div class="table-responsive-sm">
+      <div id="tableBodyResult">
+        <table class="table table-bordered table-sm" id="resultTable">
+          <thead id="headerTable">
+            <tr>
+              <th class="th-sm">Date Time
+              </th>
+              <th class="th-sm">Log Type
+              </th>
+              <th class="th-sm">Employee Name
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2019-09-03 (7:56:00 AM)</td>
+              <td>IN</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-03 (6:09:02 PM)</td>
+              <td>OUT</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-04 (7:40:28 AM)</td>
+              <td>IN</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-04 (6:13:56 PM)</td>
+              <td>OUT</td>
+              <td>Steven</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- <tr id="noData">
+								<td class="text-center" colspan="3">NO DATA FOUND</td>
+							</tr> -->
+<script type="text/javascript" src="css/js/jquery.min.js"></script>
+<script type="text/javascript" src="css/js/popper.min.js"></script>
+<script type="text/javascript" src="css/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="js/datatables.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/datatables-select.min.js"></script> -->
+<script type="text/javascript" src="js/script.js"></script>

@@ -1,0 +1,53 @@
+#body2 {
+    /* background-color: #ede7e6; */
+    font-family: Helvetica;
+}
+
+#headerDisplay {
+    font-family: Courier New;
+}
+
+.custom-select,
+#filterInput,
+#date1,
+#date2 {
+    max-width: 150px;
+}
+
+#hrisIdPopup {
+    display: none;
+    text-decoration: underline;
+}
+
+#AscDescFilter {
+    max-width: 115px;
+}
+
+.hrBreakLine {
+    border-top: 1px solid black;
+}
+
+#filterTable {
+    outline-style: solid;
+    outline-width: 1px;
+    /*background-color: #c8d2e3;*/
+}
+
+#resultTable {
+    outline-style: solid;
+    outline-width: 1px;
+    /*border:1px solid blue;*/
+    /*border-width: 2px;*/
+    /*border-color: blue;*/
+}
+
+#headerTable {
+    background-color: #d50000;
+    color: white;
+}
+
+#logTypeIn,
+#logTypeOut {
+    max-width: 15px;
+    max-height: 15px;
+}

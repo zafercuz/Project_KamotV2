@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DTR Control Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="images/clock.ico" />
+  <link rel="stylesheet" href="css/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/css/gridSystem.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body class="bg-light">
+  <!---------------------------------------------------------------->
+  <!------------------------ BODY CONTAINER ------------------------>
+  <!---------------------------------------------------------------->
+
+  <div class="container mt-5 text-center">
+    <h1 class="display-4" id="headerDisplay">Daily Time Record</h2>
+  </div>
+
+  <!---------------------------------------------------------------->
+  <!------------------------ FILTER TABLE ------------------------>
+  <!---------------------------------------------------------------->
+  <div class="container mt-4">
+    <form class="form-inline filterForm">
+      <div class="container py-2" id="filterTable">
+        <!-- ROW -->
+        <div class="form-group row">
+          <!-- ANOTHER COLUMN -->
+          <label class="ml-3 col-form-label" for="chooseFilter">Filter:</label>
+          <div class="col-sm-6">
+            <select class="custom-select mr-sm-2 custom-select-sm" id="chooseFilter">
+              <option selected="" disabled="" value="">Choose Filter</option>
+              <option value="1">HRIS ID</option>
+              <option value="2">BRANCH</option>
+              <option value="3">EMPLOYEE NAME</option>
+            </select>
+            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
+          </div>
+          <!-- ANOTHER COLUMN -->
+          <label class="ml-3 col-form-label" for="filterBranch">Branch:</label>
+          <div class="col-sm">
+            <input type="text" class="form-control form-control-sm" id="filterBranch" placeholder="Branch Code">
+          </div>
+        </div>
+
+        <!-- ROW -->
+        <div class="form-group row">
+          <!-- ANOTHER COLUMN -->
+          <label class="ml-3 col-form-label" for="date">Date:</label>
+          <div class="col-sm-6">
+            <input type="date" class="form-control form-control-sm" id="date1">
+            <i class="fa fa-calendar"></i>
+            <input type="date" class="form-control form-control-sm mr-sm-2" id="date2">
+          </div>
+          <!-- ANOTHER COLUMN -->
+          <label class="col-form-label" for="LogType" style="margin-left: 21px;">Log Type:</label>
+          <div class="col-sm-auto" id="logType">
+            <div class="form-check form-check-inline">
+              <div class="custom-control custom-checkbox mr-2">
+                <input type="checkbox" class="custom-control-input" id="logTypeIn">
+                <label class="custom-control-label" for="logTypeIn">In</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="logTypeOut">
+                <label class="custom-control-label" for="logTypeOut">Out</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW -->
+        <div class="form-group row">
+          <div class="col-sm text-center">
+            <button type="submit" class="btn btn-primary" id="btnSearch"><i class="fa fa-search"></i> SEARCH</button>
+          </div>
+        </div>
+
+        <!-- ROW -->
+        <div class="form-group row">
+          <!-- ANOTHER COLUMN -->
+          <div class="col-sm">
+            <span id="hrisIdPopup">HRIS ID: 13070</h4>
+          </div>
+          <!-- ANOTHER COLUMN -->
+          <div class="col-sm-6 text-right">
+            <span><i class="fa fa-filter"></i>Sort By:</span>
+            <select class="custom-select mr-sm-2 custom-select-sm" id="chooseSort">
+              <option selected="" disabled="">Choose Filter</option>
+              <option value="1">Date</option>
+              <option value="2">Log Type</option>
+              <option value="3">EMPLOYEE NAME</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <!---------------------------------------------------------------->
+    <!------------------------ TABLE RESULT ------------------------>
+    <!---------------------------------------------------------------->
+    <div class="table-responsive-sm">
+      <div id="tableBodyResult">
+        <table class="table table-bordered table-sm" id="resultTable">
+          <thead id="headerTable">
+            <tr>
+              <th class="th-sm">Date Time <i class="fa fa-clock-o"></i>
+              </th>
+              <th class="th-sm">Log Type <i class="fa fa-pencil-square-o"></i>
+              </th>
+              <th class="th-sm">Employee Name <i class="fa fa-address-card"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2019-09-03 (7:56:00 AM)</td>
+              <td>IN</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-03 (6:09:02 PM)</td>
+              <td>OUT</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-04 (7:40:28 AM)</td>
+              <td>IN</td>
+              <td>Steven</td>
+            </tr>
+            <tr>
+              <td>2019-09-04 (6:13:56 PM)</td>
+              <td>OUT</td>
+              <td>Steven</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script type="text/javascript" src="css/js/jquery.min.js"></script>
+<script type="text/javascript" src="css/js/popper.min.js"></script>
+<script type="text/javascript" src="css/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="js/datatables.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/datatables-select.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/script.js"></script> -->
+<script type="text/javascript" src="js/app.js"></script>
