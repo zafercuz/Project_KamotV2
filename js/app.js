@@ -3,6 +3,9 @@ console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
 //BUTTON
 const Searchbtn = document.querySelector('#btnSearch');
 
+//ERROR MSGS VARIABLES
+const errorContainer = document.querySelector('.errorMsgs');
+
 //TABLE VARIABLES
 const chooseFilter = document.querySelector('#chooseFilter'),
   filterInput = document.querySelector('#filterInput'),
@@ -34,31 +37,37 @@ chooseFilter.addEventListener('change', e => {
 });
 
 Searchbtn.addEventListener('click', e => {
-  let text = "",
+  let errors = [],
+    messageHTML = "",
     todayDate = moment().format('YYYY-MM-D'),
     chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
   e.preventDefault();
 
-  // clearErrorMsg(text);
-
   // VALIDATE FILTER INPUTS
-  const validate = formValidate(text, chooseFilterValue, todayDate);
+  const validate = formValidate(errors, chooseFilterValue, todayDate);
   if (!validate) {
     console.log("ERRORS!!!! FIX");
+    errorContainer.style.display = 'block';
+    displayError(errors, messageHTML);
   } else {
     hrisIdPopup.style.display = 'block';
     console.log("Error free");
+    errorContainer.querySelector("ul").innerHTML = messageHTML;
+    errorContainer.style.display = 'none';
     // AJAX REQUEST HERE
   }
 
 });
 
-// const clearErrorMsg = (text) => {
-
-// };
+const displayError = (errors, messageHTML) => {
+  errors.forEach(error => {
+    messageHTML += "<li>" + error + "</li>";
+  });
+  errorContainer.querySelector("ul").innerHTML = messageHTML;
+};
 
 //FORM VALIDATION (FOR CHECKING ERRORS)
-const formValidate = (text, filterValue, todayDate) => {
+const formValidate = (errors, filterValue, todayDate) => {
   //LOCAL VARIABLES FOR VALIDATION
   const letters = /^[a-zA-Z\s]*$/;
   const numbers = /^[0-9]+$/;
@@ -79,6 +88,7 @@ const formValidate = (text, filterValue, todayDate) => {
     date1.style.borderColor = "red";
     date2.style.borderColor = "red";
     console.log("Fields must not be empty!");
+    errors.push("Fields must not be empty!");
     return false;
   }
 
@@ -86,20 +96,20 @@ const formValidate = (text, filterValue, todayDate) => {
   if (filterValue === "") {
     chooseFilter.style.borderColor = "red";
     errorCount++;
-    console.log("You must choose a filter!");
+    errors.push("You must choose a filter!");
   }
 
   if (filterValue !== "" && filterInput.value === "" && filterValue !== "2") {
     filterInput.style.borderColor = "red";
     errorCount++;
-    console.log("Filter input must not be empty!");
+    errors.push("Filter input must not be empty!");
   }
 
   if (filterValue === "1" && filterInput.value !== "") {
     if (!filterInput.value.match(numberRange)) {
       filterInput.style.borderColor = "red";
       errorCount++;
-      console.log("Filter input must be only numeric character and exactly 5 digits!");
+      errors.push("Filter input must be only numeric character and exactly 5 digits!");
     }
   }
 
@@ -107,44 +117,44 @@ const formValidate = (text, filterValue, todayDate) => {
   if (filterBranch.value === "") {
     filterBranch.style.borderColor = "red";
     errorCount++;
-    console.log("Branch input must not be empty!");
+    errors.push("Branch input must not be empty!");
   }
 
   // CHECKING FOR DATE FILTER INPUTS
   if (date1.value === "") {
     date1.style.borderColor = "red";
     errorCount++;
-    console.log("Date 1 must not be empty!");
+    errors.push("Date 1 must not be empty!");
   }
 
   if (date2.value === "") {
     date2.style.borderColor = "red";
     errorCount++;
-    console.log("Date 2 must not be empty!");
+    errors.push("Date 2 must not be empty!");
   }
 
   if (date1.value > date2.value) {
     date1.style.borderColor = "red";
     errorCount++;
-    console.log("Date 1 must not be greater than Date 2!");
+    errors.push("Date 1 must not be greater than Date 2!");
   }
 
   if (date2.value < date1.value) {
     date2.style.borderColor = "red";
     errorCount++;
-    console.log("Date 2 must not be less than Date 1!");
+    errors.push("Date 2 must not be less than Date 1!");
   }
 
-  if(date1.value > todayDate){
+  if (date1.value > todayDate) {
     date1.style.borderColor = "red";
     errorCount++;
-    console.log("Date 1 must not greater than current date!");
+    errors.push("Date 1 must not greater than current date!");
   }
 
-  if(date2.value > todayDate){
+  if (date2.value > todayDate) {
     date2.style.borderColor = "red";
     errorCount++;
-    console.log("Date 2 must not greater than current date!");
+    errors.push("Date 2 must not greater than current date!");
   }
 
   ///////////////////// END OF VALIDATION /////////////////////

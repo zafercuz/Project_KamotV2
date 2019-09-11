@@ -78,6 +78,12 @@ label {
   color: white;
 }
 
+.errorMsgs{
+  /* max-width: auto; */
+  background-color: #ff473d;
+  display: none;
+}
+
 /* #logTypeIn,
 #logTypeOut {
     max-width: 15px;
