@@ -1,7 +1,37 @@
+.dark-primary-color {
+  background: #E64A19;
+}
+
+.default-primary-color {
+  background: #FF5722;
+}
+
+.light-primary-color {
+  background: #FFCCBC;
+}
+
+.text-primary-color {
+  color: #FFFFFF;
+}
+
+.accent-color {
+  background: #FF9800;
+}
+
+.primary-text-color {
+  color: #212121;
+}
+
+.secondary-text-color {
+  color: #757575;
+}
+
+.divider-color {
+  border-color: #BDBDBD;
+}
+
 body {
-  /* background-color: #ede7e6; */
-  /* background-color: beige; */
-  /* background: #a2b9bc; */
+  /* background-color: #FFCCBC; */
   font-family: Helvetica;
 }
 
@@ -18,6 +48,8 @@ body {
 #filterTable {
   outline-style: solid;
   outline-width: 1px;
+  outline-color: black;
+  background-color: #f3efef;
   /* background-color: #c8d2e3; */
 }
 
@@ -25,8 +57,8 @@ label {
   font-weight: bold;
 }
 
-#logTypeIn{
-  background-color: #990000;  
+#logTypeIn {
+  background-color: #990000;
   border-color: #990000;
 }
 
@@ -35,13 +67,10 @@ label {
   outline-style: solid;
   outline-width: 1px;
   background-color: beige;
-  /*border:1px solid blue;*/
-  /*border-width: 2px;*/
-  /*border-color: blue;*/
 }
 
 #headerTable {
-  background-color: #d50000;
+  /* background-color: #d50000; */
   color: white;
 }
 
@@ -50,7 +79,3 @@ label {
     max-width: 55px;
     max-height: 15px;
 } */
-
-.filterContainer {
-  background-color: burlywood;
-}
