@@ -9,13 +9,9 @@ const chooseFilter = document.querySelector('#chooseFilter'),
   filterBranch = document.querySelector('#filterBranch'),
   date1 = document.querySelector('#date1'),
   date2 = document.querySelector('#date2'),
-  logType = document.querySelector('#logType'),
-  logTypeIn = document.querySelector('#logTypeIn'),
-  logTypeOut = document.querySelector('#logTypeOut'),
   chooseSort = document.querySelector('#chooseSort'),
   tableBodyResult = document.querySelector('#tableBodyResult'),
   hrisIdPopup = document.querySelector('#hrisIdPopup'),
-  form = document.querySelector('.filterForm'),
   ascendingdescending = document.querySelector('#ascendingdescending'),
   noData = document.querySelector('#noData');
 
@@ -39,29 +35,33 @@ chooseFilter.addEventListener('change', e => {
 
 Searchbtn.addEventListener('click', e => {
   let text = "",
+    todayDate = moment().format('YYYY-MM-D'),
     chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
   e.preventDefault();
 
+  // clearErrorMsg(text);
 
   // VALIDATE FILTER INPUTS
-  let validate = formValidate(chooseFilterValue);
-  if (validate) {
+  const validate = formValidate(text, chooseFilterValue, todayDate);
+  if (!validate) {
+    console.log("ERRORS!!!! FIX");
+  } else {
     hrisIdPopup.style.display = 'block';
     console.log("Error free");
     // AJAX REQUEST HERE
-  } else {
-    console.log("ERRORS!!!! FIX");
   }
 
 });
 
+// const clearErrorMsg = (text) => {
+
+// };
 
 //FORM VALIDATION (FOR CHECKING ERRORS)
-const formValidate = (filterValue) => {
+const formValidate = (text, filterValue, todayDate) => {
   //LOCAL VARIABLES FOR VALIDATION
   const letters = /^[a-zA-Z\s]*$/;
   const numbers = /^[0-9]+$/;
-  const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const numberRange = /^\d{5}$/;
   let errorCount = 0;
 
@@ -71,16 +71,13 @@ const formValidate = (filterValue) => {
   filterBranch.style.borderColor = "";
   date1.style.borderColor = "";
   date2.style.borderColor = "";
-  logType.style.backgroundColor = "";
 
   // CHECK IF REQUIRED FIELDS ARE EMPTY
-  if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === ""
-    && (!logTypeIn.checked && !logTypeOut.checked)) {
+  if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === "") {
     chooseFilter.style.borderColor = "red";
     filterBranch.style.borderColor = "red";
     date1.style.borderColor = "red";
     date2.style.borderColor = "red";
-    logType.style.backgroundColor = "red";
     console.log("Fields must not be empty!");
     return false;
   }
@@ -126,11 +123,28 @@ const formValidate = (filterValue) => {
     console.log("Date 2 must not be empty!");
   }
 
-  // CHECKING FOR LOG TYPE CHECKBOXES FILTER INPUTS
-  if (!logTypeIn.checked && !logTypeOut.checked) {
-    logType.style.backgroundColor = "red";
+  if (date1.value > date2.value) {
+    date1.style.borderColor = "red";
     errorCount++;
-    console.log("Log Type must at least have 1 checked!");
+    console.log("Date 1 must not be greater than Date 2!");
+  }
+
+  if (date2.value < date1.value) {
+    date2.style.borderColor = "red";
+    errorCount++;
+    console.log("Date 2 must not be less than Date 1!");
+  }
+
+  if(date1.value > todayDate){
+    date1.style.borderColor = "red";
+    errorCount++;
+    console.log("Date 1 must not greater than current date!");
+  }
+
+  if(date2.value > todayDate){
+    date2.style.borderColor = "red";
+    errorCount++;
+    console.log("Date 2 must not greater than current date!");
   }
 
   ///////////////////// END OF VALIDATION /////////////////////

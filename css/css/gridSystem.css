@@ -39,6 +39,10 @@ body {
   font-family: Courier New;
 }
 
+.col-label, .checkbox-control-label{
+  font-weight: bold;
+}
+
 #hrisIdPopup {
   display: none;
   text-decoration: underline;
@@ -57,10 +61,10 @@ label {
   font-weight: bold;
 }
 
-#logTypeIn {
+/* #logTypeIn {
   background-color: #990000;
   border-color: #990000;
-}
+} */
 
 
 #resultTable {
@@ -76,6 +80,6 @@ label {
 
 /* #logTypeIn,
 #logTypeOut {
-    max-width: 55px;
+    max-width: 15px;
     max-height: 15px;
 } */
