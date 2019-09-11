@@ -1,8 +1,4 @@
-// $(document).ready(function () {
-// 	$('#resultTable').DataTable();
-// 	// $('.dataTables_length').addClass('bs-select');
-// });
-console.log("DTR!");
+console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
 
 //BUTTON
 const Searchbtn = document.querySelector('#btnSearch');
@@ -13,7 +9,7 @@ const chooseFilter = document.querySelector('#chooseFilter'),
   filterBranch = document.querySelector('#filterBranch'),
   date1 = document.querySelector('#date1'),
   date2 = document.querySelector('#date2'),
-  logType = document.querySelector('#logType');
+  logType = document.querySelector('#logType'),
   logTypeIn = document.querySelector('#logTypeIn'),
   logTypeOut = document.querySelector('#logTypeOut'),
   chooseSort = document.querySelector('#chooseSort'),
@@ -39,37 +35,34 @@ chooseFilter.addEventListener('change', e => {
     }
     filterInput.disabled = false;
   }
-
 });
-
 
 Searchbtn.addEventListener('click', e => {
   let text = "",
     chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
   e.preventDefault();
-  
+
 
   // VALIDATE FILTER INPUTS
   let validate = formValidate(chooseFilterValue);
-  if(validate){
+  if (validate) {
     hrisIdPopup.style.display = 'block';
     console.log("Error free");
+    // AJAX REQUEST HERE
   } else {
     console.log("ERRORS!!!! FIX");
   }
-  
 
-  // updateResult();
 });
 
 
 //FORM VALIDATION (FOR CHECKING ERRORS)
 const formValidate = (filterValue) => {
   //LOCAL VARIABLES FOR VALIDATION
-  const letters = /^[a-zA-Z\s]*$/;;
+  const letters = /^[a-zA-Z\s]*$/;
   const numbers = /^[0-9]+$/;
   const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const numberRange = /^\d{11}$/;
+  const numberRange = /^\d{5}$/;
   let errorCount = 0;
 
   //SETTING DEFUALT STYLES FOR INPUT FIELDS
@@ -92,6 +85,7 @@ const formValidate = (filterValue) => {
     return false;
   }
 
+  // CHECKING FOR 1ST FILTER
   if (filterValue === "") {
     chooseFilter.style.borderColor = "red";
     errorCount++;
@@ -104,41 +98,47 @@ const formValidate = (filterValue) => {
     console.log("Filter input must not be empty!");
   }
 
-  if (filterBranch.value === ""){
+  if (filterValue === "1" && filterInput.value !== "") {
+    if (!filterInput.value.match(numberRange)) {
+      filterInput.style.borderColor = "red";
+      errorCount++;
+      console.log("Filter input must be only numeric character and exactly 5 digits!");
+    }
+  }
+
+  // CHECKING FOR BRANCH FILTER INPUT
+  if (filterBranch.value === "") {
     filterBranch.style.borderColor = "red";
     errorCount++;
     console.log("Branch input must not be empty!");
   }
 
-  if(date1.value === ""){
+  // CHECKING FOR DATE FILTER INPUTS
+  if (date1.value === "") {
     date1.style.borderColor = "red";
     errorCount++;
     console.log("Date 1 must not be empty!");
   }
 
-  if(date2.value === ""){
+  if (date2.value === "") {
     date2.style.borderColor = "red";
     errorCount++;
     console.log("Date 2 must not be empty!");
   }
 
-  if(!logTypeIn.checked && !logTypeOut.checked){
+  // CHECKING FOR LOG TYPE CHECKBOXES FILTER INPUTS
+  if (!logTypeIn.checked && !logTypeOut.checked) {
     logType.style.backgroundColor = "red";
     errorCount++;
     console.log("Log Type must at least have 1 checked!");
   }
 
-  if(errorCount === 0){
+  ///////////////////// END OF VALIDATION /////////////////////
+
+  if (errorCount === 0) {
     return true; // RETURN TRUE IF NO ERROR
   } else {
     return false; // RETURN FALSE IF THERES AN ERROR
   }
 
 };
-
-//FOR MANIPULATING DOM
-// const updateResult = () => {
-//   console.log("Update");
-//   text += '<tr><td>2019-09-03 (7:56:00 AM)</td><td>IN</td><td>Steven</td></tr><tr><td>2019-09-03 (6:09:02 PM)</td><td>OUT</td><td>Steven</td></tr><tr><td>2019-09-04 (7:40:28 AM)</td><td>IN</td><td>Steven</td></tr><tr><td>2019-09-04 (6:13:56 PM)</td><td>OUT</td><td>Steven</td></tr>';
-//   tableBodyResult.querySelector('tbody').innerHTML = text;
-// };
