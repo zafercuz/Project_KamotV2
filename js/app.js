@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $('#resultTable').DataTable();
 });
 
@@ -37,7 +37,7 @@ chooseFilter.addEventListener('change', e => {
       filterInput.placeholder = "Input HRIS ID";
       filterInput.addEventListener('input', numbersOnly, true);
       filterInput.removeEventListener("input", lettersOnly, true);
-    } 
+    }
     else if (chooseFilterValue === "3") {
       filterInput.placeholder = "Input Employee Name";
       filterInput.addEventListener('input', lettersOnly, true);
@@ -121,98 +121,97 @@ const formValidate = (errors, filterValue, todayDate) => {
 
   // CHECKING FOR 1ST FILTER
   if (filterValue === "") {
-    chooseFilter.style.borderColor = "red";
+    errorStyleMsg(chooseFilter, errors, "You must choose a filter!");
     errorCount++;
-    errors.push("You must choose a filter!");
   }
 
   if (filterValue !== "" && filterInput.value === "" && filterValue !== "2") {
-    filterInput.style.borderColor = "red";
+    errorStyleMsg(filterInput, errors, "Filter input must not be empty!");
     errorCount++;
-    errors.push("Filter input must not be empty!");
   }
 
   if (filterValue === "1" && filterInput.value !== "") {
     if (!filterInput.value.match(numberRange)) {
-      filterInput.style.borderColor = "red";
+      errorStyleMsg(filterInput, errors, "Filter input must be exactly 5 digits!");
       errorCount++;
-      errors.push("Filter input must be exactly 5 digits!");
     }
   }
 
   if (filterValue === "3" && filterInput.value !== "") {
     if (!filterInput.value.match(letters)) {
-      filterInput.style.borderColor = "red";
+      errorStyleMsg(filterInput, errors, "Filter input must consist of only alphabet characters!");
       errorCount++;
-      errors.push("Filter input must consist of only alphabet characters!");
     }
-    else if(!filterInput.value.match(/[a-z]/i)){
-      filterInput.style.borderColor = "red";
+    else if (!filterInput.value.match(/[a-z]/i)) {
+      errorStyleMsg(filterInput, errors, "Filter input must not be empty!");
       errorCount++;
-      errors.push("Filter input must not be empty!");
     }
   }
 
   // CHECKING FOR BRANCH FILTER INPUT
   if (filterBranch.value === "") {
-    filterBranch.style.borderColor = "red";
+    errorStyleMsg(filterBranch, errors, "Branch input must not be empty!");
     errorCount++;
-    errors.push("Branch input must not be empty!");
   }
 
   // CHECKING FOR DATE FILTER INPUTS
   if (date1.value === "") {
-    date1.style.borderColor = "red";
+    errorStyleMsg(date1, errors, "Date 1 must not be empty!");
     errorCount++;
-    errors.push("Date 1 must not be empty!");
   }
 
   if (date2.value === "") {
-    date2.style.borderColor = "red";
+    errorStyleMsg(date2, errors, "Date 2 must not be empty!");
     errorCount++;
-    errors.push("Date 2 must not be empty!");
   }
 
   if (date1.value > date2.value && date2.value !== "") {
-    date1.style.borderColor = "red";
+    errorStyleMsg(date1, errors, "Date 1 must not be greater than Date 2!");
     errorCount++;
-    errors.push("Date 1 must not be greater than Date 2!");
   }
 
   if (date2.value < date1.value && date1.value !== "") {
-    date2.style.borderColor = "red";
+    errorStyleMsg(date2, errors, "Date 2 must not be less than Date 1!");
     errorCount++;
-    errors.push("Date 2 must not be less than Date 1!");
   }
 
   if (date1.value > todayDate) {
-    date1.style.borderColor = "red";
+    errorStyleMsg(date1, errors, "Date 1 must not be greater than current date!");
     errorCount++;
-    errors.push("Date 1 must not be greater than current date!");
   }
 
   if (date2.value > todayDate) {
-    date2.style.borderColor = "red";
+    errorStyleMsg(date2, errors, "Date 2 must not be greater than current date!");
     errorCount++;
-    errors.push("Date 2 must not be greater than current date!");
   }
 
   // CHECKING FOR DATE FILTER INPUTS
   if (!logTypeIn.checked && !logTypeOut.checked) {
-    logTypeCheckboxIn.style.color = "red";
-    logTypeCheckboxOut.style.color = "red";
-    errorCount++;
-    errors.push("At least one log type checkbox must be check!");
+    errorStyleMsg([logTypeCheckboxIn, logTypeCheckboxOut], errors, "At least one log type checkbox must be check!");
   }
+
   ///////////////////// END OF VALIDATION /////////////////////
 
   if (errorCount === 0) {
     return true; // RETURN TRUE IF NO ERROR
-  } 
+  }
   else {
     return false; // RETURN FALSE IF THERES AN ERROR
   }
 
+};
+
+// FUNCTION FOR ERROR MESSAGE AND STYLE
+const errorStyleMsg = (styleArr, errorArr, errorMsg) => {
+  if (Array.isArray(styleArr) == true) {
+    styleArr.forEach(element => {
+      element.style.color = "red";
+    });
+  }
+  else {
+    styleArr.style.borderColor = "red";
+  }
+  errorArr.push(errorMsg);
 };
 
 const transformTable = () => {
