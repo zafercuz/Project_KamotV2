@@ -54,18 +54,7 @@ body {
   outline-width: 1px;
   outline-color: black;
   background-color: #f3efef;
-  /* background-color: #c8d2e3; */
 }
-
-label {
-  font-weight: bold;
-}
-
-/* #logTypeIn {
-  background-color: #990000;
-  border-color: #990000;
-} */
-
 
 #resultTable {
   outline-style: solid;
@@ -74,18 +63,12 @@ label {
 }
 
 #headerTable {
-  /* background-color: #d50000; */
   color: white;
 }
 
 .errorMsgs{
-  /* max-width: auto; */
-  background-color: #ff473d;
+  /* background-color: #ff473d; */
+  /* background-color: #f44336; */
+  background-color: #ff6a6a;
   display: none;
 }
-
-/* #logTypeIn,
-#logTypeOut {
-    max-width: 15px;
-    max-height: 15px;
-} */

@@ -12,9 +12,9 @@
 </head>
 
 <body class="bg-light">
-  <!---------------------------------------------------------------->
-  <!------------------------ BODY CONTAINER ------------------------>
-  <!---------------------------------------------------------------->
+  <!------------------------------------------------------------------------>
+  <!------------------------ HEADER & NAV CONTAINER ------------------------>
+  <!------------------------------------------------------------------------>
 
   <!-- Navigation Section -->
   <nav class="navbar navbar-expand-lg navbar-light default-primary-color">
@@ -29,18 +29,20 @@
     </div>
   </header>
 
-  <!-- Error Message section -->
-  <div class="container errorMsgs">
-    <h5>Error List</h5>
-    <ul class="errorList">
-      
-    </ul>
-  </div>
+
 
   <!---------------------------------------------------------------->
-  <!------------------------ FILTER TABLE ------------------------>
+  <!------------------------ BODY CONTAINER ------------------------>
   <!---------------------------------------------------------------->
   <div class="container mt-3">
+    <!-- Error Message section -->
+    <div class="container errorMsgs">
+      <h5>Error List</h5>
+      <ul class="errorList">
+
+      </ul>
+    </div>
+    <!-- FILTER TABLE SECTION -->
     <form class="form-inline filterForm">
       <div class="container py-2" id="filterTable">
         <!-- ROW -->
@@ -67,7 +69,7 @@
         <div class="form-group row mb-2">
           <!-- ANOTHER COLUMN -->
           <div class="col">
-            <span class="col-label">Date:</span>
+            <span class="col-label">Date Range:</span>
             <input type="date" class="form-control form-control-sm" id="date1">
             <i class="fa fa-calendar"></i>
             <input type="date" class="form-control form-control-sm mr-sm-2" id="date2">
