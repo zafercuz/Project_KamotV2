@@ -1,3 +1,7 @@
+$(document).ready(function() {
+  $('#resultTable').DataTable();
+});
+
 console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
 
 //BUTTON
@@ -62,6 +66,7 @@ Searchbtn.addEventListener('click', e => {
     errorMsgs.querySelector("ul").innerHTML = messageHTML;
     errorMsgs.style.display = 'none';
     // AJAX REQUEST CALL FUNCTION HERE
+    // transformTable();
   }
 });
 
@@ -141,6 +146,11 @@ const formValidate = (errors, filterValue, todayDate) => {
       errorCount++;
       errors.push("Filter input must consist of only alphabet characters!");
     }
+    else if(!filterInput.value.match(/[a-z]/i)){
+      filterInput.style.borderColor = "red";
+      errorCount++;
+      errors.push("Filter input must not be empty!");
+    }
   }
 
   // CHECKING FOR BRANCH FILTER INPUT
@@ -203,4 +213,16 @@ const formValidate = (errors, filterValue, todayDate) => {
     return false; // RETURN FALSE IF THERES AN ERROR
   }
 
+};
+
+const transformTable = () => {
+  let text = "";
+  text += '<tr role="row" class="odd"><td>2019-08-03 (6:56:00 AM)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-03 (6:06:00 PM)</td><td>OUT</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="odd"><td>2019-08-04 (7:56:00 AM)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-04 (6:02:00 PM)</td><td>OUT</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="odd"><td>2019-08-05 (7:42:22 AM)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-05 (6:14: PM)</td><td>OUT</td><td>Steven</td></tr>';
+  // tableBodyResult.setAttribute("data-toggle","bootstrap-table");
+  tableBodyResult.querySelector('tbody').innerHTML = text;
 };
