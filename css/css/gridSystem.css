@@ -39,7 +39,8 @@ body {
   font-family: Courier New;
 }
 
-.col-label, .checkbox-control-label{
+.col-label,
+.checkbox-control-label {
   font-weight: bold;
 }
 
@@ -66,9 +67,15 @@ body {
   color: white;
 }
 
-.errorMsgs{
+.errorMsgs {
   /* background-color: #ff473d; */
   /* background-color: #f44336; */
   background-color: #ff6a6a;
   display: none;
 }
+/* 
+#logTypeIn,
+#logTypeOut {
+    max-width: 15px;
+    max-height: 15px;
+} */

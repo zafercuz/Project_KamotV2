@@ -12,15 +12,17 @@ const chooseFilter = document.querySelector('#chooseFilter'),
   filterBranch = document.querySelector('#filterBranch'),
   date1 = document.querySelector('#date1'),
   date2 = document.querySelector('#date2'),
-  chooseSort = document.querySelector('#chooseSort'),
-  tableBodyResult = document.querySelector('#tableBodyResult'),
+  logTypeCheckboxIn = document.querySelector('#logTypeCheckboxIn'),
+  logTypeCheckboxOut = document.querySelector('#logTypeCheckboxOut'),
+  logTypeIn = document.querySelector('#logTypeIn'),
+  logTypeOut = document.querySelector('#logTypeOut'),
   hrisIdPopup = document.querySelector('#hrisIdPopup'),
-  ascendingdescending = document.querySelector('#ascendingdescending'),
-  noData = document.querySelector('#noData');
+  tableBodyResult = document.querySelector('#tableBodyResult');
 
 // EVENT LISTENERS
 chooseFilter.addEventListener('change', e => {
   let chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
+  filterInput.value = "";
   //IF BRANCH IS SELECTED, DISABLE INPUT FIELD
   if (chooseFilterValue === "2") {
     filterInput.placeholder = "";
@@ -29,8 +31,13 @@ chooseFilter.addEventListener('change', e => {
   else {
     if (chooseFilterValue === "1") {
       filterInput.placeholder = "Input HRIS ID";
-    } else if (chooseFilterValue === "3") {
+      filterInput.addEventListener('input', numbersOnly, true);
+      filterInput.removeEventListener("input", lettersOnly, true);
+    } 
+    else if (chooseFilterValue === "3") {
       filterInput.placeholder = "Input Employee Name";
+      filterInput.addEventListener('input', lettersOnly, true);
+      filterInput.removeEventListener("input", numbersOnly, true);
     }
     filterInput.disabled = false;
   }
@@ -45,19 +52,31 @@ Searchbtn.addEventListener('click', e => {
 
   // VALIDATE FILTER INPUTS
   const validate = formValidate(errors, chooseFilterValue, todayDate);
-  if (!validate) {
-    console.log("ERRORS!!!! FIX");
+
+  if (!validate) { // THERE ARE ERRORS
     errorMsgs.style.display = 'block';
     displayError(errors, messageHTML);
-  } else {
+  }
+  else { // ERROR FREE
     hrisIdPopup.style.display = 'block';
-    console.log("Error free");
     errorMsgs.querySelector("ul").innerHTML = messageHTML;
     errorMsgs.style.display = 'none';
     // AJAX REQUEST CALL FUNCTION HERE
   }
-
 });
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS //
+////////////////////////////////////////////////////////////////////////////////////
+
+const numbersOnly = () => {
+  filterInput.value = filterInput.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+};
+
+const lettersOnly = () => {
+  filterInput.value = filterInput.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
+};
 
 const displayError = (errors, messageHTML) => {
   errors.forEach(error => {
@@ -70,7 +89,6 @@ const displayError = (errors, messageHTML) => {
 const formValidate = (errors, filterValue, todayDate) => {
   //LOCAL VARIABLES FOR VALIDATION
   const letters = /^[a-zA-Z\s]*$/;
-  const numbers = /^[0-9]+$/;
   const numberRange = /^\d{5}$/;
   let errorCount = 0;
 
@@ -80,14 +98,18 @@ const formValidate = (errors, filterValue, todayDate) => {
   filterBranch.style.borderColor = "";
   date1.style.borderColor = "";
   date2.style.borderColor = "";
+  logTypeCheckboxIn.style.color = "";
+  logTypeCheckboxOut.style.color = "";
 
   // CHECK IF REQUIRED FIELDS ARE EMPTY
-  if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === "") {
+  if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === ""
+    && (!logTypeIn.checked && !logTypeOut.checked)) {
     chooseFilter.style.borderColor = "red";
     filterBranch.style.borderColor = "red";
     date1.style.borderColor = "red";
     date2.style.borderColor = "red";
-    console.log("Fields must not be empty!");
+    logTypeCheckboxIn.style.color = "red";
+    logTypeCheckboxOut.style.color = "red";
     errors.push("Fields must not be empty!");
     return false;
   }
@@ -109,7 +131,15 @@ const formValidate = (errors, filterValue, todayDate) => {
     if (!filterInput.value.match(numberRange)) {
       filterInput.style.borderColor = "red";
       errorCount++;
-      errors.push("Filter input must be only numeric character and exactly 5 digits!");
+      errors.push("Filter input must be exactly 5 digits!");
+    }
+  }
+
+  if (filterValue === "3" && filterInput.value !== "") {
+    if (!filterInput.value.match(letters)) {
+      filterInput.style.borderColor = "red";
+      errorCount++;
+      errors.push("Filter input must consist of only alphabet characters!");
     }
   }
 
@@ -157,11 +187,19 @@ const formValidate = (errors, filterValue, todayDate) => {
     errors.push("Date 2 must not be greater than current date!");
   }
 
+  // CHECKING FOR DATE FILTER INPUTS
+  if (!logTypeIn.checked && !logTypeOut.checked) {
+    logTypeCheckboxIn.style.color = "red";
+    logTypeCheckboxOut.style.color = "red";
+    errorCount++;
+    errors.push("At least one log type checkbox must be check!");
+  }
   ///////////////////// END OF VALIDATION /////////////////////
 
   if (errorCount === 0) {
     return true; // RETURN TRUE IF NO ERROR
-  } else {
+  } 
+  else {
     return false; // RETURN FALSE IF THERES AN ERROR
   }
 

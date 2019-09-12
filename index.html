@@ -61,7 +61,11 @@
           <!-- ANOTHER COLUMN -->
           <div class="col">
             <span class="col-label">Branch:</span>
-            <input type="text" class="form-control form-control-sm" id="filterBranch" placeholder="Branch Code">
+            <select class="form-control custom-select mr-sm-2 custom-select-sm" id="filterBranch">
+              <option selected="" disabled="" value="">Choose Branch</option>
+              <option value="000">000 - Head Office</option>
+              <option value="074">074 - Mandaue HMWI</option>
+            </select>
           </div>
         </div>
 
@@ -86,18 +90,21 @@
         <!-- ROW -->
         <div class="form-group row">
           <!-- ANOTHER COLUMN -->
-          <div class="col">
-            <span id="hrisIdPopup">HRIS ID: 13070</span>
+          <div class="col-auto">
+            <div class="form-check form-check-inline" id="logTypeCheckboxes">
+              <div class="custom-control custom-checkbox mr-4">
+                <input type="checkbox" class="custom-control-input" id="logTypeIn" checked>
+                <label class="custom-control-label col-label" for="logTypeIn" id="logTypeCheckboxIn">Log In</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="logTypeOut" checked>
+                <label class="custom-control-label col-label" for="logTypeOut" id="logTypeCheckboxOut">Log Out</label>
+              </div>
+            </div>
           </div>
           <!-- ANOTHER COLUMN -->
           <div class="col text-right">
-            <span><i class="fa fa-filter"></i>Sort By:</span>
-            <select class="custom-select mr-sm-2 custom-select-sm" id="chooseSort">
-              <option selected="" disabled="" value="">Sort By....</option>
-              <option value="1">Date</option>
-              <option value="2">Log Type</option>
-              <option value="3">EMPLOYEE NAME</option>
-            </select>
+            <span id="hrisIdPopup">HRIS ID: 13070</span>
           </div>
         </div>
       </div>
