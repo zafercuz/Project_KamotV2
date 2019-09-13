@@ -68,8 +68,6 @@ body {
 }
 
 .errorMsgs {
-  /* background-color: #ff473d; */
-  /* background-color: #f44336; */
   background-color: #ff6a6a;
   display: none;
 }

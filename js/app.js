@@ -76,11 +76,29 @@ Searchbtn.addEventListener('click', e => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 const numbersOnly = () => {
+  setInputFilter(filterInput, function (value) {
+    return /^\d{0,5}$/.test(value);
+  });
   filterInput.value = filterInput.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 };
 
 const lettersOnly = () => {
   filterInput.value = filterInput.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
+};
+
+const setInputFilter = (textbox, inputFilter) => {
+  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+    textbox.addEventListener(event, function () {
+      if (inputFilter(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+      } else if (this.hasOwnProperty("oldValue")) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+      }
+    });
+  });
 };
 
 const displayError = (errors, messageHTML) => {
