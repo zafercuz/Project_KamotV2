@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  $('#resultTable').DataTable();
+  $('#resultTable').DataTable({
+    pagingType: 'full_numbers',
+  });
 });
 
 console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
@@ -35,13 +37,13 @@ chooseFilter.addEventListener('change', e => {
   else {
     if (chooseFilterValue === "1") {
       filterInput.placeholder = "Input HRIS ID";
-      filterInput.addEventListener('input', numbersOnly, true);
       filterInput.removeEventListener("input", lettersOnly, true);
+      filterInput.addEventListener('input', numbersOnly, true);
     }
     else if (chooseFilterValue === "3") {
       filterInput.placeholder = "Input Employee Name";
-      filterInput.addEventListener('input', lettersOnly, true);
       filterInput.removeEventListener("input", numbersOnly, true);
+      filterInput.addEventListener('input', lettersOnly, true);
     }
     filterInput.disabled = false;
   }
@@ -76,29 +78,11 @@ Searchbtn.addEventListener('click', e => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 const numbersOnly = () => {
-  setInputFilter(filterInput, function (value) {
-    return /^\d{0,5}$/.test(value);
-  });
-  filterInput.value = filterInput.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+  filterInput.value = filterInput.value.replace(/[^0-9.]/g, '').slice(0,5).replace(/(\..*)\./g, '$1');
 };
 
 const lettersOnly = () => {
   filterInput.value = filterInput.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
-};
-
-const setInputFilter = (textbox, inputFilter) => {
-  ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-    textbox.addEventListener(event, function () {
-      if (inputFilter(this.value)) {
-        this.oldValue = this.value;
-        this.oldSelectionStart = this.selectionStart;
-        this.oldSelectionEnd = this.selectionEnd;
-      } else if (this.hasOwnProperty("oldValue")) {
-        this.value = this.oldValue;
-        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-      }
-    });
-  });
 };
 
 const displayError = (errors, messageHTML) => {
@@ -234,12 +218,12 @@ const errorStyleMsg = (styleArr, errorArr, errorMsg) => {
 
 const transformTable = () => {
   let text = "";
-  text += '<tr role="row" class="odd"><td>2019-08-03 (6:56:00 AM)</td><td>IN</td><td>Steven</td></tr>';
-  text += '<tr role="row" class="even"><td>2019-08-03 (6:06:00 PM)</td><td>OUT</td><td>Steven</td></tr>';
-  text += '<tr role="row" class="odd"><td>2019-08-04 (7:56:00 AM)</td><td>IN</td><td>Steven</td></tr>';
-  text += '<tr role="row" class="even"><td>2019-08-04 (6:02:00 PM)</td><td>OUT</td><td>Steven</td></tr>';
-  text += '<tr role="row" class="odd"><td>2019-08-05 (7:42:22 AM)</td><td>IN</td><td>Steven</td></tr>';
-  text += '<tr role="row" class="even"><td>2019-08-05 (6:14: PM)</td><td>OUT</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="odd"><td>2019-08-03 (6:56)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-03 (18:06)</td><td>OUT</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="odd"><td>2019-08-04 (7:56)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-04 (18:02)</td><td>OUT</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="odd"><td>2019-08-05 (7:42)</td><td>IN</td><td>Steven</td></tr>';
+  text += '<tr role="row" class="even"><td>2019-08-05 (18:14)</td><td>OUT</td><td>Steven</td></tr>';
   // tableBodyResult.setAttribute("data-toggle","bootstrap-table");
   tableBodyResult.querySelector('tbody').innerHTML = text;
 };
