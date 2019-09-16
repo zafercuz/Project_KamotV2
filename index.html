@@ -48,26 +48,30 @@
       <form class="form-inline filterForm">
         <div class="container py-2" id="filterTable">
           <!-- ROW -->
-          <div class="form-group row mb-2">
+          <div class="form-group row">
             <!-- ANOTHER COLUMN -->
-            <div class="col">
-              <span class="col-label">Filter:</span>
-              <select class="form-control custom-select mr-sm-2 custom-select-sm" id="chooseFilter">
-                <option selected="" disabled="" value="">Choose Filter</option>
-                <option value="1">HRIS ID</option>
-                <option value="2">BRANCH</option>
-                <option value="3">EMPLOYEE NAME</option>
-              </select>
-              <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
+            <div class="col mb-2">
+              <div class="d-sm-flex align-items-baseline">
+                <span class="col-label mr-2">Filter:</span>
+                <select class="form-control custom-select mr-sm-2 custom-select-sm" id="chooseFilter">
+                  <option selected="" disabled="" value="">Choose Filter</option>
+                  <option value="1">HRIS ID</option>
+                  <option value="2">BRANCH</option>
+                  <option value="3">EMPLOYEE NAME</option>
+                </select>
+                <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
+              </div>
             </div>
             <!-- ANOTHER COLUMN -->
-            <div class="col">
-              <span class="col-label">Branch:</span>
-              <select class="form-control custom-select mr-sm-2 custom-select-sm" id="filterBranch">
-                <option selected="" disabled="" value="">Choose Branch</option>
-                <option value="000">000 - Head Office</option>
-                <option value="074">074 - Mandaue HMWI</option>
-              </select>
+            <div class="col mb-2">
+              <div class="d-sm-flex align-items-baseline">
+                <span class="col-label mr-2">Branch:</span>
+                <select class="form-control custom-select mr-sm-2 custom-select-sm" id="filterBranch">
+                  <option selected="" disabled="" value="">Choose Branch</option>
+                  <option value="000">000 - Head Office</option>
+                  <option value="074">074 - Mandaue HMWI</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -75,17 +79,21 @@
           <div class="form-group row mb-2">
             <!-- ANOTHER COLUMN -->
             <div class="col">
-              <span class="col-label">Date Range:</span>
-              <input type="date" class="form-control form-control-sm" id="date1">
-              <i class="fa fa-calendar"></i>
-              <input type="date" class="form-control form-control-sm mr-sm-2" id="date2">
+              <div class="d-sm-flex align-items-baseline">
+                <span class="col-label mr-2">Date Range:</span>
+                <input type="date" class="form-control form-control-sm" id="date1">
+                <i class="fa fa-calendar mx-1"></i>
+                <input type="date" class="form-control form-control-sm mr-sm-2" id="date2">
+              </div>
             </div>
           </div>
 
           <!-- ROW -->
           <div class="form-group row">
             <div class="col text-center">
-              <button type="submit" class="btn btn-info" id="btnSearch"><i class="fa fa-search"></i> SEARCH</button>
+              <div class="d-sm-flex align-items-baseline justify-content-sm-center">
+                <button type="submit" class="btn btn-info" id="btnSearch"><i class="fa fa-search"></i> SEARCH</button>
+              </div>
             </div>
           </div>
 
@@ -93,14 +101,17 @@
           <div class="form-group row">
             <!-- ANOTHER COLUMN -->
             <div class="col-auto">
-              <div class="form-check form-check-inline" id="logTypeCheckboxes">
-                <div class="custom-control custom-checkbox mr-4">
-                  <input type="checkbox" class="custom-control-input" id="logTypeIn" checked>
-                  <label class="custom-control-label col-label" for="logTypeIn" id="logTypeCheckboxIn">Log In</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="logTypeOut" checked>
-                  <label class="custom-control-label col-label" for="logTypeOut" id="logTypeCheckboxOut">Log Out</label>
+              <div class="d-sm-flex align-items-baseline">
+                <div class="form-check form-check-inline" id="logTypeCheckboxes">
+                  <div class="custom-control custom-checkbox mr-4">
+                    <input type="checkbox" class="custom-control-input" id="logTypeIn" checked>
+                    <label class="custom-control-label col-label" for="logTypeIn" id="logTypeCheckboxIn">Log In</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="logTypeOut" checked>
+                    <label class="custom-control-label col-label" for="logTypeOut" id="logTypeCheckboxOut">Log
+                      Out</label>
+                  </div>
                 </div>
               </div>
             </div>
