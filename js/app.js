@@ -21,7 +21,8 @@ $(document).ready(function () {
     logTypeCheckboxOut = document.querySelector('#logTypeCheckboxOut'),
     logTypeIn = document.querySelector('#logTypeIn'),
     logTypeOut = document.querySelector('#logTypeOut'),
-    hrisIdPopup = document.querySelector('#hrisIdPopup');
+    hrisIdPopup = document.querySelector('#hrisIdPopup'),
+    hrisID = document.querySelector('#hrisID');
 
   // EVENT LISTENERS
   chooseFilter.addEventListener('change', e => {
@@ -62,7 +63,7 @@ $(document).ready(function () {
       displayError(errors, messageHTML);
     }
     else { // ERROR FREE
-      hrisIdPopup.style.display = 'block';
+      displayHrisId(chooseFilterValue);
       errorMsgs.querySelector("ul").innerHTML = messageHTML;
       errorMsgs.style.display = 'none';
       // AJAX REQUEST CALL FUNCTION HERE
@@ -75,6 +76,10 @@ $(document).ready(function () {
   // FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS //
   ////////////////////////////////////////////////////////////////////////////////////
 
+  /**
+   * For restriction on input field
+   *
+   */
   const numbersOnly = () => {
     filterInput.value = filterInput.value.replace(/[^0-9.]/g, '').slice(0, 5).replace(/(\..*)\./g, '$1');
   };
@@ -83,11 +88,34 @@ $(document).ready(function () {
     filterInput.value = filterInput.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
   };
 
+  /**
+   *
+   * Displays list of errors
+   * @param {*} errors
+   * @param {*} messageHTML
+   */
   const displayError = (errors, messageHTML) => {
     errors.forEach(error => {
       messageHTML += "<li>" + error + "</li>";
     });
     errorMsgs.querySelector("ul").innerHTML = messageHTML;
+  };
+
+
+  /**
+   *
+   * Displays HRIS ID
+   * @param {*} chooseFilterValue
+   */
+  const displayHrisId = chooseFilterValue => {
+    if (chooseFilterValue === "1") {
+      hrisID.innerHTML = filterInput.value;
+      hrisIdPopup.style.display = 'block';
+    }
+    else {
+      hrisID.value = "";
+      hrisIdPopup.style.display = 'none';
+    }
   };
 
   //FORM VALIDATION (FOR CHECKING ERRORS)
@@ -214,6 +242,10 @@ $(document).ready(function () {
     errorArr.push(errorMsg);
   };
 
+  /**
+   * For DOM Manipulation on result table
+   *
+   */
   const transformTable = () => {
     let dummyArr = [
       { date: '2019-09-05 (7:56)', logType: 'IN', empName: 'Steven' },
