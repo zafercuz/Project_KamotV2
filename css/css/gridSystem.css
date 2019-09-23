@@ -35,6 +35,11 @@ body {
   font-family: Helvetica;
 }
 
+footer{
+  background-color: rgb(230, 230, 230);
+  
+}
+
 #headerDisplay {
   font-family: Courier New;
 }
