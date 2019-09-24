@@ -17,10 +17,6 @@ $(document).ready(function () {
     filterBranch = document.querySelector('#filterBranch'),
     date1 = document.querySelector('#date1'),
     date2 = document.querySelector('#date2'),
-    logTypeCheckboxIn = document.querySelector('#logTypeCheckboxIn'),
-    logTypeCheckboxOut = document.querySelector('#logTypeCheckboxOut'),
-    logTypeIn = document.querySelector('#logTypeIn'),
-    logTypeOut = document.querySelector('#logTypeOut'),
     hrisIdPopup = document.querySelector('#hrisIdPopup'),
     hrisID = document.querySelector('#hrisID');
 
@@ -131,18 +127,13 @@ $(document).ready(function () {
     filterBranch.style.borderColor = "";
     date1.style.borderColor = "";
     date2.style.borderColor = "";
-    logTypeCheckboxIn.style.color = "";
-    logTypeCheckboxOut.style.color = "";
 
     // CHECK IF REQUIRED FIELDS ARE EMPTY
-    if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === ""
-      && (!logTypeIn.checked && !logTypeOut.checked)) {
+    if (filterValue === "" && filterInput.value === "" && filterBranch.value === "" && date1.value === "" && date2.value === "") {
       chooseFilter.style.borderColor = "red";
       filterBranch.style.borderColor = "red";
       date1.style.borderColor = "red";
       date2.style.borderColor = "red";
-      logTypeCheckboxIn.style.color = "red";
-      logTypeCheckboxOut.style.color = "red";
       errors.push("Fields must not be empty!");
       return false;
     }
@@ -213,11 +204,6 @@ $(document).ready(function () {
       errorCount++;
     }
 
-    // CHECKING FOR DATE FILTER INPUTS
-    if (!logTypeIn.checked && !logTypeOut.checked) {
-      errorStyleMsg([logTypeCheckboxIn, logTypeCheckboxOut], errors, "At least one log type checkbox must be check!");
-    }
-
     ///////////////////// END OF VALIDATION /////////////////////
 
     if (errorCount === 0) {
@@ -248,21 +234,18 @@ $(document).ready(function () {
    */
   const transformTable = () => {
     let dummyArr = [
-      { date: '2019-09-05 (7:56)', logType: 'IN', empName: 'Steven' },
-      { date: '2019-09-05 (18:04)', logType: 'OUT', empName: 'Steven' },
-      { date: '2019-09-06 (7:59)', logType: 'IN', empName: 'Steven' },
-      { date: '2019-09-06 (18:10)', logType: 'OUT', empName: 'Steven' },
-      { date: '2019-09-09 (8:01)', logType: 'IN', empName: 'Steven' },
-      { date: '2019-09-09 (18:04)', logType: 'OUT', empName: 'Steven' },
-      { date: '2019-09-10 (7:43)', logType: 'IN', empName: 'Steven' },
-      { date: '2019-09-10 (18:15)', logType: 'OUT', empName: 'Steven' },
+      { date: '2019-09-05', logIn: '7:56:24 AM', logOut: '6:04:11 PM', empName: 'Steven' },
+      { date: '2019-09-06', logIn: '7:59:04 AM', logOut: '6:10:31 PM', empName: 'Steven' },
+      { date: '2019-09-09', logIn: '8:01:24 AM', logOut: '6:08:27 PM', empName: 'Steven' },
+      { date: '2019-09-10', logIn: '7:43:02 AM', logOut: '6:15:44 PM', empName: 'Steven' },
     ];
 
     table.clear().draw();
     dummyArr.forEach(element => {
       table.row.add([
         element.date,
-        element.logType,
+        element.logIn,
+        element.logOut,
         element.empName,
       ]).draw();
     });

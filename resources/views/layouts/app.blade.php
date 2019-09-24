@@ -52,8 +52,8 @@
     @yield('content')
   </main>
 
-  <footer class="footer">
-    <div class="container py-1 mt-5">
+  {{-- <footer>
+    <div class="container" style="margin-bottom:0">
       <div class="row text-center mt-3">
         <div class="col">
           <img src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
@@ -67,6 +67,22 @@
         </div>
       </div>
     </div>
+  </footer> --}}
+  <footer>
+  <div class="container py-3" style="margin-top:100px;">
+    <div class="row text-center mt-3">
+      <div class="col">
+        <img src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
+          style="max-height: 75%;max-width: 75%;">
+      </div>
+      <div class="col">
+        <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 75%;max-width: 75%;">
+      </div>
+      <div class="col">
+        <img src="{{ asset('images/MAPI LOGO.png') }}" style="max-height: 75%;max-width: 75%;">
+      </div>
+    </div>
+  </div>
   </footer>
 
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
