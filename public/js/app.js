@@ -60,10 +60,30 @@ $(document).ready(function () {
     }
     else { // ERROR FREE
       displayHrisId(chooseFilterValue);
-      errorMsgs.querySelector("ul").innerHTML = messageHTML;
+      errorMsgs.querySelector("ul").innerHTML = messageHTML; // CLEAR THE ERROR LIST
       errorMsgs.style.display = 'none';
+
       // AJAX REQUEST CALL FUNCTION HERE
-      transformTable();
+      $.ajax({
+        type: 'get',
+        url: '/SearchAjax',
+        _token: "{{ csrf_token() }}",
+        data: {
+          'chooseFilterValue': chooseFilterValue,
+          'filterInput': filterInput.value,
+          'filterBranch': filterBranch.value,
+          'date1': date1.value,
+          'date2': date2.value,
+        },
+        success: function (data) {
+            console.log(data);
+            transformTable();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+      });
+      
     }
   });
 

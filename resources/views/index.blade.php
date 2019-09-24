@@ -81,7 +81,7 @@
       <table class="table table-bordered table-sm" id="resultTable">
         <thead id="headerTable">
           <tr>
-            <th class="th-sm accent-color primary-text-color">Date Time <i class="fa fa-clock-o"></i>
+            <th class="th-sm accent-color primary-text-color">Date <i class="fa fa-clock-o"></i>
             </th>
             <th class="th-sm accent-color primary-text-color">Log In <i class="fa fa-pencil-square-o"></i>
             </th>
@@ -92,72 +92,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2019-09-03</td>
-            <td>7:58:00 AM</td>
-            <td>6:04:20 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-04</td>
-            <td>8:01:55 AM</td>
-            <td>6:02:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-01</td>
-            <td>7:31:55 AM</td>
-            <td>6:03:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-03</td>
-            <td>7:58:00 AM</td>
-            <td>6:04:20 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-04</td>
-            <td>8:01:55 AM</td>
-            <td>6:02:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-01</td>
-            <td>7:31:55 AM</td>
-            <td>6:03:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-03</td>
-            <td>7:58:00 AM</td>
-            <td>6:04:20 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-04</td>
-            <td>8:01:55 AM</td>
-            <td>6:02:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-01</td>
-            <td>7:31:55 AM</td>
-            <td>6:03:49 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-03</td>
-            <td>7:58:00 AM</td>
-            <td>6:04:20 PM</td>
-            <td>Steven</td>
-          </tr>
-          <tr>
-            <td>2019-09-04</td>
-            <td>8:01:55 AM</td>
-            <td>6:02:49 PM</td>
-            <td>Steven</td>
-          </tr>
+         
         </tbody>
       </table>
     </div>
