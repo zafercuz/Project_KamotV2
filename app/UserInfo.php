@@ -41,7 +41,7 @@ class UserInfo extends Model
 
     public function scopeCompareDate($query, $date1, $date2)
     {
-        return $query->whereBetween(DB::raw('date'),array($date1,$date2));
+        return $query->whereRaw("checktime >= ? AND checktime <= ?", array($date1." 00:00:00.000", $date2." 23:59:59.000"));
     }
 
 }

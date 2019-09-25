@@ -76,14 +76,14 @@ $(document).ready(function () {
           'date2': date2.value,
         },
         success: function (data) {
-            console.log(data);
-            transformTable();
+            // console.log(data);
+            transformTable(data);
         },
         error: function (error) {
             console.log(error);
         }
       });
-      
+      console.log("AJAX");
     }
   });
 
@@ -252,21 +252,17 @@ $(document).ready(function () {
    * For DOM Manipulation on result table
    *
    */
-  const transformTable = () => {
-    let dummyArr = [
-      { date: '2019-09-05', logIn: '7:56:24 AM', logOut: '6:04:11 PM', empName: 'Steven' },
-      { date: '2019-09-06', logIn: '7:59:04 AM', logOut: '6:10:31 PM', empName: 'Steven' },
-      { date: '2019-09-09', logIn: '8:01:24 AM', logOut: '6:08:27 PM', empName: 'Steven' },
-      { date: '2019-09-10', logIn: '7:43:02 AM', logOut: '6:15:44 PM', empName: 'Steven' },
-    ];
+  const transformTable = data => {
+    let collection = data.collection;
+    console.log(collection);
 
     table.clear().draw();
-    dummyArr.forEach(element => {
+    collection.forEach(element => {
       table.row.add([
         element.date,
         element.logIn,
         element.logOut,
-        element.empName,
+        element.name,
       ]).draw();
     });
   };
