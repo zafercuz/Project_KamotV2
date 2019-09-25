@@ -159,9 +159,10 @@ class HomeController extends Controller
 
     public function SearchAjax(Request $request)
     {
-        $logIn = UserInfo::SelectLogIn()->JoinCol()->HrisId(1)->CompareDate($request->date1, $request->date2)
+        $userId = UserInfo::GetUserId($request->filterInput)->get();
+        $logIn = UserInfo::SelectLogIn()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
         ->TimeType('i')->OrderDate()->get();
-        $logOut = UserInfo::SelectLogOut()->JoinCol()->HrisId(1)->CompareDate($request->date1, $request->date2)
+        $logOut = UserInfo::SelectLogOut()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
         ->TimeType('o')->OrderDate()->get();
 
         $collection = collect([]);
@@ -245,7 +246,7 @@ class HomeController extends Controller
             }
         }
     
-        return response()->json(['logIn' => $logIn, 'logOut' => $logOut, 'collection' => $collection]);
+        return response()->json(['collection' => $collection, 'userid' => $userId]);
     }
 
     private function pushCollection($collection, $userid, $date, $logIn, $logOut, $name)

@@ -63,6 +63,7 @@ $(document).ready(function () {
       errorMsgs.querySelector("ul").innerHTML = messageHTML; // CLEAR THE ERROR LIST
       errorMsgs.style.display = 'none';
 
+      table.clear().draw();
       // AJAX REQUEST CALL FUNCTION HERE
       $.ajax({
         type: 'get',
@@ -76,11 +77,13 @@ $(document).ready(function () {
           'date2': date2.value,
         },
         success: function (data) {
-            // console.log(data);
+            console.log(data);
             transformTable(data);
         },
         error: function (error) {
             console.log(error);
+            errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>"; // CLEAR THE ERROR LIST
+            errorMsgs.style.display = 'block';
         }
       });
       console.log("AJAX");
@@ -256,7 +259,6 @@ $(document).ready(function () {
     let collection = data.collection;
     console.log(collection);
 
-    table.clear().draw();
     collection.forEach(element => {
       table.row.add([
         element.date,

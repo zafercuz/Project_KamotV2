@@ -9,6 +9,11 @@ class UserInfo extends Model
 {
     public $table = 'Userinfo';
 
+    public function scopeGetUserId($query, $id)
+    {
+        return $query->select('userid')->where('badgeNumber',$id);
+    }
+
     public function scopeSelectLogIn($query)
     {
         return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name');
