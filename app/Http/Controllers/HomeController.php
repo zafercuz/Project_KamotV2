@@ -165,7 +165,7 @@ class HomeController extends Controller
         ->TimeType('o')->OrderDate()->get();
 
         $collection = collect([]);
-
+        
         if (count($logIn) < count($logOut)) {
             $size = count($logOut);
         } elseif (count($logIn) > count($logOut)) {
@@ -194,8 +194,8 @@ class HomeController extends Controller
                         $collection,
                         $logIn[$counter1]->userid,
                         $Date1[0],
-                        $logIn[$counter1]->checktime,
-                        $logOut[$counter2]->checktime,
+                        Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A'),
+                        Carbon::parse($logOut[$counter2]->checktime)->format('h:i:s A'),
                         $logIn[$counter1]->name
                     );
                 } elseif ($Date1[0] > $Date2[0]) { // EMPLOYEE DIDN'T LOG IN OR MULTIPLE LOG OUT
@@ -204,7 +204,7 @@ class HomeController extends Controller
                         $logIn[$counter1]->userid,
                         $Date2[0],
                         "N/A",
-                        $logOut[$counter2]->checktime,
+                        Carbon::parse($logOut[$counter2]->checktime)->format('h:i:s A'),
                         $logIn[$counter1]->name
                     );
                     $counter1 -= 1;
@@ -214,7 +214,7 @@ class HomeController extends Controller
                         $collection,
                         $logIn[$counter1]->userid,
                         $Date1[0],
-                        $logIn[$counter1]->checktime,
+                        Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A'),
                         "N/A",
                         $logIn[$counter1]->name
                     );
@@ -230,7 +230,7 @@ class HomeController extends Controller
                     $logIn[$counter1-1]->userid,
                     $Date2[0],
                     "N/A",
-                    $logOut[$counter2]->checktime,
+                    Carbon::parse($logOut[$counter2]->checktime)->format('h:i:s A'),
                     $logIn[$counter1-1]->name
                 );
             } elseif ($Date1 != null && $Date2 == null) { // IF DATE 2 IS MISSING
@@ -238,7 +238,7 @@ class HomeController extends Controller
                     $collection,
                     $logIn[$counter1]->userid,
                     $Date1[0],
-                    $logIn[$counter1]->checktime,
+                    Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A'),
                     "N/A",
                     $logIn[$counter1]->name
                 );
