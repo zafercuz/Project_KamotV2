@@ -13,8 +13,8 @@ class HomeController extends Controller
     public function index()
     {
         // $from = date('2019-05-02');
-        $from = Carbon::createFromDate(2019, 05, 20)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 05, 22)->format('Y-m-d');
+        $from = Carbon::createFromDate(2019, 05, 31)->format('Y-m-d');
+        $to = Carbon::createFromDate(2019, 06, 10)->format('Y-m-d');
         // $to = date('2019-05-09');
 
         // $logIn = UserInfo::SelectLogIn()->JoinCol()->HrisId(1)->where('checktime', '>=', $from)->where('checktime', '<=', $to)->TimeType('i')->OrderDate()->get();
@@ -56,31 +56,45 @@ class HomeController extends Controller
                         $logIn[$counter1]->name
                     );
                 } elseif ($Date1[0] > $Date2[0]) { // EMPLOYEE DIDN'T LOG IN OR MULTIPLE LOG OUT
-                    $this->pushCollection(
-                        $collection,
-                        $logIn[$counter1]->userid,
-                        $Date2[0],
-                        "N/A",
-                        $logOut[$counter2]->checktime,
-                        $logIn[$counter1]->name
-                    );
+                    // if ($Date2[0] == $prevLogOutDate[0][0] && $Date2[1] > $prevLogOutDate[0][1]) {
+                    //     $collection->replace([$count-1 => [
+                    //         'userid' => $logIn[$counter1-1]->userid,
+                    //         'logOut' => $logOut[$counter2]->checktime,
+                    //         'date' => $Date2[0],
+                    //         'logIn' => $logIn[$counter1-1]->checktime,
+                    //         'logOut' => $logOut[$counter2]->checktime,
+                    //         'name' => $logIn[$counter1-1]->name
+                    //         ]
+                    //     ]);
+                    // } else {
+                        $this->pushCollection(
+                            $collection,
+                            $logIn[$counter1]->userid,
+                            $Date2[0],
+                            "N/A",
+                            $logOut[$counter2]->checktime,
+                            $logIn[$counter1]->name
+                        );
+                    // }
                     $counter1 -= 1;
                     $size += 1;
                 } elseif ($Date1[0] < $Date2[0]) { // EMPLOYEE DIDN'T LOG OUT OR MULTIPLE LOG IN
-                    $this->pushCollection(
-                        $collection,
-                        $logIn[$counter1]->userid,
-                        $Date1[0],
-                        $logIn[$counter1]->checktime,
-                        "N/A",
-                        $logIn[$counter1]->name
-                    );
+                    if ($Date1[0] != $prevLogInDate[0][0]) { // INSERT ONLY IF NO MULTIPLE LOG IN
+                        $this->pushCollection(
+                            $collection,
+                            $logIn[$counter1]->userid,
+                            $Date1[0],
+                            $logIn[$counter1]->checktime,
+                            "N/A",
+                            $logIn[$counter1]->name
+                        );
+                    }
                     $counter2 -= 1;
                     $size += 1;
                 }
 
-                // $prevLogInDate = [$Date1];
-                // $prevLogOutDate = [$Date2];
+                $prevLogInDate = [$Date1];
+                $prevLogOutDate = [$Date2];
             } elseif ($Date1 == null && $Date2 != null) {
                 $this->pushCollection(
                     $collection,
@@ -101,7 +115,7 @@ class HomeController extends Controller
                 );
             }
         }
-        // dd($logIn, $logOut, $collection);
+        dd($logIn, $logOut, $collection);
 
 
         /*
