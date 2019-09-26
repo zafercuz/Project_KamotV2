@@ -28,17 +28,20 @@ $(document).ready(function () {
     if (chooseFilterValue === "2") {
       filterInput.placeholder = "";
       filterInput.disabled = true;
+      $(table.column(3).header()).text('HRIS ID');
     }
     else {
       if (chooseFilterValue === "1") {
         filterInput.placeholder = "Input HRIS ID";
         filterInput.removeEventListener("input", lettersOnly, true);
         filterInput.addEventListener('input', numbersOnly, true);
+        $(table.column(3).header()).text('Employee Name');
       }
       else if (chooseFilterValue === "3") {
         filterInput.placeholder = "Input Employee Name";
         filterInput.removeEventListener("input", numbersOnly, true);
         filterInput.addEventListener('input', lettersOnly, true);
+        $(table.column(3).header()).text('Employee Name');
       }
       filterInput.disabled = false;
     }
@@ -262,9 +265,9 @@ $(document).ready(function () {
     collection.forEach(element => {
       table.row.add([
         element.date,
-        element.logIn,
-        element.logOut,
-        element.name,
+        moment(element.logIn).format("hh:mm:ss A"),
+        moment(element.logOut).format("hh:mm:ss A"),
+        element.nameOrId,
       ]).draw();
     });
   };

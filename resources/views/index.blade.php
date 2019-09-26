@@ -81,13 +81,13 @@
       <table class="table table-bordered table-sm" id="resultTable">
         <thead id="headerTable">
           <tr>
-            <th class="th-sm accent-color primary-text-color">Date <i class="fa fa-clock-o"></i>
+            <th class="th-sm accent-color primary-text-color">Date 
             </th>
-            <th class="th-sm accent-color primary-text-color">Log In <i class="fa fa-pencil-square-o"></i>
+            <th class="th-sm accent-color primary-text-color">Log In 
             </th>
-            <th class="th-sm accent-color primary-text-color">Log Out <i class="fa fa-pencil-square-o"></i>
+            <th class="th-sm accent-color primary-text-color">Log Out 
             </th>
-            <th class="th-sm accent-color primary-text-color">Employee Name <i class="fa fa-address-card"></i>
+            <th class="th-sm accent-color primary-text-color">Employee Name 
             </th>
           </tr>
         </thead>
