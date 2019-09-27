@@ -1,7 +1,6 @@
 $(document).ready(function () {
   console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
 
-
   // var mom = moment('2019-09-05 17:10:54.000', 'YYYY-MM-DD HH:mm:ss');
   // console.log(mom);
   // console.log(mom.format('hh:mm:ss A'));
@@ -24,7 +23,7 @@ $(document).ready(function () {
     date2 = document.querySelector('#date2'),
     hrisIdPopup = document.querySelector('#hrisIdPopup'),
     hrisID = document.querySelector('#hrisID');
-
+    
   // EVENT LISTENERS
   chooseFilter.addEventListener('change', e => {
     let chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
@@ -274,7 +273,7 @@ $(document).ready(function () {
           formatOut = moment(element.logOut, 'YYYY-MM-DD HH:mm:ss'),
           textLogIn = "",
           textLogOut = "";
-          
+
       if(formatIn.isValid() === false){
         textLogIn = "N/A";
       } else {

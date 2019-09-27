@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\UserInfo;
 use App\CheckInOut;
+use App\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -12,12 +14,14 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $branch = Branch::all();
+        // dd($branch);
         $from = Carbon::createFromDate(2019, 5, 2)->format('Y-m-d');
         $to = Carbon::createFromDate(2019, 6, 4)->format('Y-m-d');
 
         $logIn = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
         $logOut = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
-        
+
         $collection = collect([]);
         $move = 0;
         $prevLogInDate = null;
@@ -113,7 +117,7 @@ class HomeController extends Controller
         $collection = $this->removeLastItem($collection, $logOut);
         // dd($logIn, $logOut, $collection, $size, $move);
 
-        return view('index');
+        return view('index', compact('branch'));
     }
 
     public function SearchAjax(Request $request)

@@ -34,8 +34,9 @@
             <span class="col-label mr-2">Branch:</span>
             <select class="form-control custom-select mr-sm-2 custom-select-sm" id="filterBranch">
               <option selected="" disabled="" value="">Choose Branch</option>
-              <option value="000">000 - Head Office</option>
-              <option value="074">074 - Mandaue HMWI</option>
+              @foreach ($branch as $item)
+              {{ $item }}<option value={{ $item->bcode }}>{{ $item->bname }}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -81,18 +82,18 @@
       <table class="table table-bordered table-sm" id="resultTable">
         <thead id="headerTable">
           <tr>
-            <th class="th-sm accent-color primary-text-color">Date 
+            <th class="th-sm accent-color primary-text-color">Date
             </th>
-            <th class="th-sm accent-color primary-text-color">Log In 
+            <th class="th-sm accent-color primary-text-color">Log In
             </th>
-            <th class="th-sm accent-color primary-text-color">Log Out 
+            <th class="th-sm accent-color primary-text-color">Log Out
             </th>
-            <th class="th-sm accent-color primary-text-color">Employee Name 
+            <th class="th-sm accent-color primary-text-color">Employee Name
             </th>
           </tr>
         </thead>
         <tbody>
-         
+
         </tbody>
       </table>
     </div>
