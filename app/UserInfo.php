@@ -14,14 +14,9 @@ class UserInfo extends Model
         return $query->select('userid')->where('badgeNumber',$id);
     }
 
-    public function scopeSelectLogIn($query)
+    public function scopeSelectLog($query)
     {
         return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name');
-    }
-
-    public function scopeSelectLogOut($query)
-    {
-        return $query->select('checktime', 'checktype');
     }
 
     public function scopeJoinCol($query)

@@ -1,6 +1,11 @@
 $(document).ready(function () {
   console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
 
+
+  // var mom = moment('2019-09-05 17:10:54.000', 'YYYY-MM-DD HH:mm:ss');
+  // console.log(mom);
+  // console.log(mom.format('hh:mm:ss A'));
+
   //BUTTON
   const Searchbtn = document.querySelector('#btnSearch');
 
@@ -262,11 +267,30 @@ $(document).ready(function () {
     let collection = data.collection;
     console.log(collection);
 
+
+
     collection.forEach(element => {
+      let formatIn = moment(element.logIn, 'YYYY-MM-DD HH:mm:ss'),
+          formatOut = moment(element.logOut, 'YYYY-MM-DD HH:mm:ss'),
+          textLogIn = "",
+          textLogOut = "";
+          
+      if(formatIn.isValid() === false){
+        textLogIn = "N/A";
+      } else {
+        textLogIn = formatIn.format('hh:mm:ss A');
+      }
+
+      if(formatOut.isValid() === false){
+        textLogOut = "N/A";
+      } else {
+        textLogOut = formatOut.format('hh:mm:ss A');
+      }
+
       table.row.add([
         element.date,
-        moment(element.logIn).format("hh:mm:ss A"),
-        moment(element.logOut).format("hh:mm:ss A"),
+        textLogIn,
+        textLogOut,
         element.nameOrId,
       ]).draw();
     });
