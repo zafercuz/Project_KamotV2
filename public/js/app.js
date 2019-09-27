@@ -66,7 +66,6 @@ $(document).ready(function () {
       displayError(errors, messageHTML);
     }
     else { // ERROR FREE
-      displayHrisId(chooseFilterValue);
       errorMsgs.querySelector("ul").innerHTML = messageHTML; // CLEAR THE ERROR LIST
       errorMsgs.style.display = 'none';
 
@@ -84,13 +83,14 @@ $(document).ready(function () {
           'date2': date2.value,
         },
         success: function (data) {
-            console.log(data);
-            transformTable(data);
+          displayHrisId(chooseFilterValue);
+          console.log(data);
+          transformTable(data);
         },
         error: function (error) {
-            console.log(error);
-            errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>"; // CLEAR THE ERROR LIST
-            errorMsgs.style.display = 'block';
+          console.log(error);
+          errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>"; // CLEAR THE ERROR LIST
+          errorMsgs.style.display = 'block';
         }
       });
       console.log("AJAX");
@@ -264,10 +264,6 @@ $(document).ready(function () {
    */
   const transformTable = data => {
     let collection = data.collection;
-    console.log(collection);
-
-
-
     collection.forEach(element => {
       let formatIn = moment(element.logIn, 'YYYY-MM-DD HH:mm:ss'),
           formatOut = moment(element.logOut, 'YYYY-MM-DD HH:mm:ss'),

@@ -7,6 +7,7 @@ use DB;
 use App\UserInfo;
 use App\CheckInOut;
 use App\Branch;
+use App\Helpers\DatabaseConnection;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -18,6 +19,10 @@ class HomeController extends Controller
         // dd($branch);
         $from = Carbon::createFromDate(2019, 5, 2)->format('Y-m-d');
         $to = Carbon::createFromDate(2019, 6, 4)->format('Y-m-d');
+
+        $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid','asc')->get();
+        // dd($logIn);
+
 
         $logIn = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
         $logOut = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
@@ -67,13 +72,13 @@ class HomeController extends Controller
                     //     $collection = $filt;
                     // } else {
                     $this->pushCollection(
-                            $collection,
-                            $logIn[$counter1]->userid,
-                            $Date2[0],
-                            "N/A",
-                            $logOut[$counter2]->checktime,
-                            $logIn[$counter1]->name
-                        );
+                        $collection,
+                        $logIn[$counter1]->userid,
+                        $Date2[0],
+                        "N/A",
+                        $logOut[$counter2]->checktime,
+                        $logIn[$counter1]->name
+                    );
                     $move += 1;
                     // }
                     $counter1 -= 1;
@@ -123,10 +128,17 @@ class HomeController extends Controller
     public function SearchAjax(Request $request)
     {
         $userId = UserInfo::GetUserId($request->filterInput)->get();
-        $logIn = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
-        ->TimeType('i')->OrderDate()->get();
-        $logOut = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
-        ->TimeType('o')->OrderDate()->get();
+        return response()->json(['filt' => $request->chooseFilterValue]);
+        if($request->chooseFilterValue === "1"){        
+            $logIn = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
+            ->TimeType('i')->OrderDate()->get();
+            $logOut = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
+            ->TimeType('o')->OrderDate()->get();
+        }
+        elseif($request->chooseFilterValue === "3"){
+            $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid','asc')->get();
+            $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('userinfo.userid','asc')->get();
+        }
 
         // Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A')
 
@@ -175,13 +187,13 @@ class HomeController extends Controller
                     //     $collection = $filt;
                     // } else {
                     $this->pushCollection(
-                            $collection,
-                            $logIn[$counter1]->userid,
-                            $Date2[0],
-                            "N/A",
-                            $logOut[$counter2]->checktime,
-                            $logIn[$counter1]->name
-                        );
+                        $collection,
+                        $logIn[$counter1]->userid,
+                        $Date2[0],
+                        "N/A",
+                        $logOut[$counter2]->checktime,
+                        $logIn[$counter1]->name
+                    );
                     $move += 1;
                     // }
                     $counter1 -= 1;
