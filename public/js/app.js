@@ -33,6 +33,7 @@ $(document).ready(function () {
       filterInput.placeholder = "";
       filterInput.disabled = true;
       $(table.column(3).header()).text('HRIS ID');
+      table.order([3, 'asc']).draw();
     }
     else {
       if (chooseFilterValue === "1") {
@@ -40,12 +41,14 @@ $(document).ready(function () {
         filterInput.removeEventListener("input", lettersOnly, true);
         filterInput.addEventListener('input', numbersOnly, true);
         $(table.column(3).header()).text('Employee Name');
+        table.order([0, 'asc']).draw();
       }
       else if (chooseFilterValue === "3") {
         filterInput.placeholder = "Input Employee Name";
         filterInput.removeEventListener("input", numbersOnly, true);
         filterInput.addEventListener('input', lettersOnly, true);
         $(table.column(3).header()).text('Employee Name');
+        table.order([3, 'asc']).draw();
       }
       filterInput.disabled = false;
     }
@@ -57,6 +60,8 @@ $(document).ready(function () {
       todayDate = moment().format('YYYY-MM-D'),
       chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
     e.preventDefault();
+
+    console.log(chooseFilterValue);
 
     // VALIDATE FILTER INPUTS
     const validate = formValidate(errors, chooseFilterValue, todayDate);

@@ -7,7 +7,7 @@ use DB;
 
 class UserInfo extends Model
 {
-    protected $connection = 'sqlsrv';
+    // protected $connection = 'sqlsrv';
     public $table = 'Userinfo';
 
     public function scopeGetUserId($query, $id)

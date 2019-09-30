@@ -15,18 +15,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $branch = Branch::all();
-        // dd($branch);
-        $from = Carbon::createFromDate(2019, 5, 2)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 6, 4)->format('Y-m-d');
+        $branchModel = new Branch;
+        $branchModel->setConnection('branch');
+        $branch = $branchModel->get();
+        // dd($getBranches);
+        $from = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
+        $to = Carbon::createFromDate(2019, 9, 25)->format('Y-m-d');
 
-        $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid','asc')->get();
-        // dd($logIn);
+        $logIn = UserInfo::SelectLog()->where('name', 'like', '%ste%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
+        $logOut = UserInfo::SelectLog()->where('name', 'like', '%ste%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
+        
 
-
-        $logIn = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
-        $logOut = UserInfo::SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
-
+        // $logIn = UserInfo::SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
+        // $logOut = UserInfo::SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
+        // dd($logIn, $logOut);
         $collection = collect([]);
         $move = 0;
         $prevLogInDate = null;
@@ -42,6 +44,17 @@ class HomeController extends Controller
             $size = count($logIn);
         }
 
+        // $collection = $this->forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
+        $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
+        // dd($collection);
+        $collection = $this->removeLastItem($collection, $logOut);
+        // dd($logIn, $logOut, $collection, $size, $move);
+
+        return view('index', compact('branch'));
+    }
+
+    public function forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate)
+    {
         for ($count = 0, $counter1 = 0, $counter2 = 0; $count < $size+$move; $count++, $counter1++, $counter2++) {
             if (isset($logIn[$counter1]->checktime)) {
                 $Date1 = $this->getExplodeDate($logIn[$counter1]->checktime);
@@ -60,6 +73,7 @@ class HomeController extends Controller
                     $this->pushCollection(
                         $collection,
                         $logIn[$counter1]->userid,
+                        $logIn[$counter1]->Badgenumber,
                         $Date1[0],
                         $logIn[$counter1]->checktime,
                         $logOut[$counter2]->checktime,
@@ -74,6 +88,7 @@ class HomeController extends Controller
                     $this->pushCollection(
                         $collection,
                         $logIn[$counter1]->userid,
+                        $logIn[$counter1]->Badgenumber,
                         $Date2[0],
                         "N/A",
                         $logOut[$counter2]->checktime,
@@ -88,6 +103,7 @@ class HomeController extends Controller
                         $this->pushCollection(
                             $collection,
                             $logIn[$counter1]->userid,
+                            $logIn[$counter1]->Badgenumber,
                             $Date1[0],
                             $logIn[$counter1]->checktime,
                             "N/A",
@@ -103,6 +119,7 @@ class HomeController extends Controller
                 $this->pushCollection(
                     $collection,
                     $logOut[$counter2]->userid,
+                    $logOut[$counter2]->Badgenumber,
                     $Date2[0],
                     "N/A",
                     $logOut[$counter2]->checktime,
@@ -112,6 +129,7 @@ class HomeController extends Controller
                 $this->pushCollection(
                     $collection,
                     $logIn[$counter1]->userid,
+                    $logIn[$counter1]->Badgenumber,
                     $Date1[0],
                     $logIn[$counter1]->checktime,
                     "N/A",
@@ -119,27 +137,136 @@ class HomeController extends Controller
                 );
             }
         }
-        $collection = $this->removeLastItem($collection, $logOut);
-        // dd($logIn, $logOut, $collection, $size, $move);
+        // dd($collection);
+        return $collection;
+    }
 
-        return view('index', compact('branch'));
+    public function forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate)
+    {
+        for ($count = 0, $counter1 = 0, $counter2 = 0; $count < $size+$move; $count++, $counter1++, $counter2++) {
+            if (isset($logIn[$counter1]->checktime)) {
+                $Date1 = $this->getExplodeDate($logIn[$counter1]->checktime);
+                $currentId = $logIn[$counter1]->userid;
+            } else {
+                $Date1 = null;
+                $currentId = null;
+            }
+        
+            if (isset($logOut[$counter2]->checktime)) {
+                $Date2 = $this->getExplodeDate($logOut[$counter2]->checktime);
+                $currentId = $logOut[$counter2]->userid;
+            } else {
+                $Date2 = null;
+                $currentId = null;
+            }
+
+            if ($Date1 != null && $Date2 != null) {
+                if ($Date1[0] == $Date2[0]) {
+                    $this->pushCollection(
+                        $collection,
+                        $logIn[$counter1]->userid,
+                        $logIn[$counter1]->Badgenumber,
+                        $Date1[0],
+                        $logIn[$counter1]->checktime,
+                        $logOut[$counter2]->checktime,
+                        $logIn[$counter1]->name
+                    );
+                } elseif ($Date1[0] > $Date2[0]) { // DIDN'T LOG IN OR MULTIPLE LOG OUT
+                    if ($Date1[0] == $prevLogInDate[0][0]) { // MULTIPLE LOG IN, DONT PUSH TO COLLECTION
+                        $counter2 -= 1;
+                    } elseif ($Date2[0] == $prevLogOutDate[0][0]) { // IS IT MULTIPLE LOG OUT?
+                        $this->pushCollection(
+                            $collection,
+                            $logOut[$counter2]->userid,
+                            $logOut[$counter2]->Badgenumber,
+                            $Date2[0],
+                            "N/A",
+                            $logOut[$counter2]->checktime,
+                            $logIn[$counter2]->name
+                        );
+                        $counter1 -= 1;
+                    } else { // DIDN'T LOG IN
+                        $this->pushCollection(
+                            $collection,
+                            $logOut[$counter2]->userid,
+                            $logOut[$counter2]->Badgenumber,
+                            $Date2[0],
+                            "N/A",
+                            $logOut[$counter2]->checktime,
+                            $logOut[$counter2]->name
+                        );
+                        $counter1 -= 1;
+                    }
+                    $move += 1;
+                } elseif ($Date1[0] < $Date2[0]) { // DIDN'T LOG OUT OR MULTIPLE LOG IN
+                    if ($Date1[0] == $prevLogInDate[0][0]) { // MULTIPLE LOG IN
+                        $counter2 -= 1;
+                    } elseif ($Date2[0] == $prevLogOutDate[0][0]) { // MULTIPLE LOG OUT
+                        $this->pushCollection(
+                            $collection,
+                            $logOut[$counter2]->userid,
+                            $logOut[$counter2]->Badgenumber,
+                            $Date2[0],
+                            "N/A",
+                            $logOut[$counter2]->checktime,
+                            $logOut[$counter2]->name
+                        );
+                        $counter1 -= 1;
+                    } else { // DIDN'T LOG OUT
+                        $this->pushCollection(
+                            $collection,
+                            $logIn[$counter1]->userid,
+                            $logIn[$counter1]->Badgenumber,
+                            $Date1[0],
+                            $logIn[$counter1]->checktime,
+                            "N/A",
+                            $logIn[$counter1]->name
+                        );
+                        $counter2 -= 1;
+                    }
+                    $move += 1;
+                }
+                $prevLogInDate = [$Date1];
+                $prevLogOutDate = [$Date2];
+            } elseif ($Date1 == null && $Date2 != null) {
+                $this->pushCollection(
+                    $collection,
+                    $logOut[$counter2]->userid,
+                    $logOut[$counter2]->Badgenumber,
+                    $Date2[0],
+                    "N/A",
+                    $logOut[$counter2]->checktime,
+                    $logOut[$counter2]->name
+                );
+            } elseif ($Date1 != null && $Date2 == null) {
+                $this->pushCollection(
+                    $collection,
+                    $logIn[$counter1]->userid,
+                    $logIn[$counter1]->Badgenumber,
+                    $Date1[0],
+                    $logIn[$counter1]->checktime,
+                    "N/A",
+                    $logIn[$counter1]->name
+                );
+            }
+        }
+        // dd($collection);
+        return $collection;
     }
 
     public function SearchAjax(Request $request)
     {
         $userId = UserInfo::GetUserId($request->filterInput)->get();
-        return response()->json(['filt' => $request->chooseFilterValue]);
-        if($request->chooseFilterValue === "1"){        
+
+        if ($request->chooseFilterValue === "1") {
             $logIn = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
             ->TimeType('i')->OrderDate()->get();
             $logOut = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
             ->TimeType('o')->OrderDate()->get();
+        } elseif ($request->chooseFilterValue === "3") {
+            $logIn = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('i')->orderBy('userinfo.userid', 'asc')->get();
+            $logOut = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('o')->orderBy('userinfo.userid', 'asc')->get();
         }
-        elseif($request->chooseFilterValue === "3"){
-            $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid','asc')->get();
-            $logIn = UserInfo::SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('userinfo.userid','asc')->get();
-        }
-
         // Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A')
 
         $collection = collect([]);
@@ -147,8 +274,6 @@ class HomeController extends Controller
         $prevLogInDate = null;
         $prevLogOutDate = null;
 
-        // dd($logIn, $logOut);
-
         if (count($logIn) < count($logOut)) {
             $size = count($logOut);
         } elseif (count($logIn) > count($logOut)) {
@@ -157,92 +282,23 @@ class HomeController extends Controller
             $size = count($logIn);
         }
 
-        for ($count = 0, $counter1 = 0, $counter2 = 0; $count < $size+$move; $count++, $counter1++, $counter2++) {
-            if (isset($logIn[$counter1]->checktime)) {
-                $Date1 = $this->getExplodeDate($logIn[$counter1]->checktime);
-            } else {
-                $Date1 = null;
-            }
-        
-            if (isset($logOut[$counter2]->checktime)) {
-                $Date2 = $this->getExplodeDate($logOut[$counter2]->checktime);
-            } else {
-                $Date2 = null;
-            }
-
-            if ($Date1 != null && $Date2 != null) {
-                if ($Date1[0] == $Date2[0]) {
-                    $this->pushCollection(
-                        $collection,
-                        $logIn[$counter1]->userid,
-                        $Date1[0],
-                        $logIn[$counter1]->checktime,
-                        $logOut[$counter2]->checktime,
-                        $logIn[$counter1]->name
-                    );
-                } elseif ($Date1[0] > $Date2[0]) { // DIDN'T LOG IN OR MULTIPLE LOG OUT
-                    // if ($Date2[0] == $prevLogOutDate[0][0] && $Date2[1] > $prevLogOutDate[0][1]) {
-                    //     // $move += 1;
-                    //     $filt = $collection->replaceRecursive([$count-$move => ['logOut' => $logOut[$counter2]->checktime]]);
-                    //     $collection = $filt;
-                    // } else {
-                    $this->pushCollection(
-                        $collection,
-                        $logIn[$counter1]->userid,
-                        $Date2[0],
-                        "N/A",
-                        $logOut[$counter2]->checktime,
-                        $logIn[$counter1]->name
-                    );
-                    $move += 1;
-                    // }
-                    $counter1 -= 1;
-                // $move += 1;
-                } elseif ($Date1[0] < $Date2[0]) { // DIDN'T LOG OUT OR MULTIPLE LOG IN
-                    if ($Date1[0] != $prevLogInDate[0][0]) {
-                        $this->pushCollection(
-                            $collection,
-                            $logIn[$counter1]->userid,
-                            $Date1[0],
-                            $logIn[$counter1]->checktime,
-                            "N/A",
-                            $logIn[$counter1]->name
-                        );
-                    }
-                    $move += 1;
-                    $counter2 -= 1;
-                }
-                $prevLogInDate = [$Date1];
-                $prevLogOutDate = [$Date2];
-            } elseif ($Date1 == null && $Date2 != null) {
-                $this->pushCollection(
-                    $collection,
-                    $logOut[$counter2]->userid,
-                    $Date2[0],
-                    "N/A",
-                    $logOut[$counter2]->checktime,
-                    $logOut[$counter2]->name
-                );
-            } elseif ($Date1 != null && $Date2 == null) {
-                $this->pushCollection(
-                    $collection,
-                    $logIn[$counter1]->userid,
-                    $Date1[0],
-                    $logIn[$counter1]->checktime,
-                    "N/A",
-                    $logIn[$counter1]->name
-                );
-            }
+        if ($request->chooseFilterValue === "1") {
+            $collection = $this->forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
         }
+        elseif ($request->chooseFilterValue === "3"){
+            $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
+        }
+        
         $collection = $this->removeLastItem($collection, $logOut);
 
-        return response()->json(['logIn' => $logIn, 'collection' => $collection, 'userid' => $userId]);
+        return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'userid' => $userId]);
     }
 
-    private function pushCollection($collection, $userid, $date, $logIn, $logOut, $name)
+    public function pushCollection($collection, $userid, $badgeNumber, $date, $logIn, $logOut, $name)
     {
         $collection->push([
             'userid' => $userid,
+            'badgeNumber' => $badgeNumber,
             'date' => $date,
             'logIn' => $logIn,
             'logOut' => $logOut,
