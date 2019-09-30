@@ -8,7 +8,7 @@ use DB;
 class UserInfo extends Model
 {
     // protected $connection = 'sqlsrv';
-    public $table = 'Userinfo';
+    // public $table = 'Userinfo';
 
     public function scopeGetUserId($query, $id)
     {
@@ -17,7 +17,7 @@ class UserInfo extends Model
 
     public function scopeSelectLog($query)
     {
-        return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name');
+        return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name')->from('USERINFO');
     }
 
     public function scopeJoinCol($query)

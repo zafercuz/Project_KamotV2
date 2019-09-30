@@ -7,28 +7,41 @@ use DB;
 use App\UserInfo;
 use App\CheckInOut;
 use App\Branch;
-use App\Helpers\DatabaseConnection;
+// use App\Helpers\DatabaseConnection;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Config;
 
 class HomeController extends Controller
 {
     public function index()
     {
         $branchModel = new Branch;
+        // Config::set("database.connections.branch", ["database" => "zbranch_office"]);
         $branchModel->setConnection('branch');
         $branch = $branchModel->get();
-        // dd($getBranches);
+        // dd($branch);
+
         $from = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 9, 25)->format('Y-m-d');
+        $to = Carbon::createFromDate(2019, 9, 4)->format('Y-m-d');
 
-        $logIn = UserInfo::SelectLog()->where('name', 'like', '%ste%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
-        $logOut = UserInfo::SelectLog()->where('name', 'like', '%ste%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
-        
+        $userInfo = new UserInfo;
+        // $userInfo->setConnection('dtr001');
 
-        // $logIn = UserInfo::SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
-        // $logOut = UserInfo::SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
+        // $logIn = $userInfo->SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
+        // $logOut = $userInfo->SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('checkinout.userid', 'asc')->OrderDate()->get();
         // dd($logIn, $logOut);
+        // $config = Config::get('database.connections.dtr001');
+        // $config['database'] = "dtr001";
+        // config()->set('database.connections.dtr001', $config);
+        
+        // Config::set("database.connections.sqlsrv", ["database" => "dtr001"]);
+        $databaseName = "dtr001"; // Dynamically get this value from db
+        $userInfo->setConnection($databaseName);
+        $logIn = $userInfo->SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
+        $logOut = $userInfo->SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
+        // dd($logIn, $logOut);
+
         $collection = collect([]);
         $move = 0;
         $prevLogInDate = null;
@@ -44,9 +57,9 @@ class HomeController extends Controller
             $size = count($logIn);
         }
 
-        // $collection = $this->forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
-        $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
-        // dd($collection);
+        $collection = $this->forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
+        // $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
+        dd($collection);
         $collection = $this->removeLastItem($collection, $logOut);
         // dd($logIn, $logOut, $collection, $size, $move);
 
@@ -70,15 +83,32 @@ class HomeController extends Controller
 
             if ($Date1 != null && $Date2 != null) {
                 if ($Date1[0] == $Date2[0]) {
-                    $this->pushCollection(
-                        $collection,
-                        $logIn[$counter1]->userid,
-                        $logIn[$counter1]->Badgenumber,
-                        $Date1[0],
-                        $logIn[$counter1]->checktime,
-                        $logOut[$counter2]->checktime,
-                        $logIn[$counter1]->name
-                    );
+                    if ($prevLogInDate == null && $prevLogOutDate == null) { // FOR THE FIRST ENTRY
+                        $this->pushCollection(
+                            $collection,
+                            $logIn[$counter1]->userid,
+                            $logIn[$counter1]->Badgenumber,
+                            $Date1[0],
+                            $logIn[$counter1]->checktime,
+                            $logOut[$counter2]->checktime,
+                            $logIn[$counter1]->name
+                        );
+                    } elseif ($Date1[0] == $prevLogInDate[0][0] && $Date1[0] == $prevLogInDate[0][1]
+                            && $Date2[0] == $prevLogOutDate[0][0] && $Date2[0] == $prevLogInDate[0][1]) {
+                            // DO NOTHING
+                    } elseif ($prevLogInDate != null && $prevLogOutDate != null && 
+                            $Date1[0] != $prevLogInDate[0][0] && $Date1[0] != $prevLogInDate[0][1]
+                            && $Date2[0] != $prevLogOutDate[0][0] && $Date2[0] != $prevLogInDate[0][1]) {
+                        $this->pushCollection(
+                            $collection,
+                            $logIn[$counter1]->userid,
+                            $logIn[$counter1]->Badgenumber,
+                            $Date1[0],
+                            $logIn[$counter1]->checktime,
+                            $logOut[$counter2]->checktime,
+                            $logIn[$counter1]->name
+                        );
+                    }
                 } elseif ($Date1[0] > $Date2[0]) { // DIDN'T LOG IN OR MULTIPLE LOG OUT
                     // if ($Date2[0] == $prevLogOutDate[0][0] && $Date2[1] > $prevLogOutDate[0][1]) {
                     //     // $move += 1;
@@ -97,7 +127,6 @@ class HomeController extends Controller
                     $move += 1;
                     // }
                     $counter1 -= 1;
-                // $move += 1;
                 } elseif ($Date1[0] < $Date2[0]) { // DIDN'T LOG OUT OR MULTIPLE LOG IN
                     if ($Date1[0] != $prevLogInDate[0][0]) {
                         $this->pushCollection(
@@ -264,8 +293,8 @@ class HomeController extends Controller
             $logOut = UserInfo::SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)
             ->TimeType('o')->OrderDate()->get();
         } elseif ($request->chooseFilterValue === "3") {
-            $logIn = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('i')->orderBy('userinfo.userid', 'asc')->get();
-            $logOut = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('o')->orderBy('userinfo.userid', 'asc')->get();
+            $logIn = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('i')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+            $logOut = UserInfo::SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->TimeType('o')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         }
         // Carbon::parse($logIn[$counter1]->checktime)->format('h:i:s A')
 
@@ -284,8 +313,7 @@ class HomeController extends Controller
 
         if ($request->chooseFilterValue === "1") {
             $collection = $this->forHRISId($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
-        }
-        elseif ($request->chooseFilterValue === "3"){
+        } elseif ($request->chooseFilterValue === "3") {
             $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
         }
         
