@@ -8,16 +8,16 @@ use DB;
 class UserInfo extends Model
 {
     // protected $connection = 'sqlsrv';
-    // public $table = 'Userinfo';
+    public $table = 'Userinfo';
 
     public function scopeGetUserId($query, $id)
     {
-        return $query->select('userid')->where('badgeNumber',$id);
+        return $query->select('userid')->where('badgeNumber', $id);
     }
 
     public function scopeSelectLog($query)
     {
-        return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name')->from('USERINFO');
+        return $query->select('userinfo.userid', 'Badgenumber', 'checktime', 'checktype', 'name')->distinct()->from('USERINFO');
     }
 
     public function scopeJoinCol($query)
