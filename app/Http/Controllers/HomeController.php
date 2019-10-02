@@ -19,9 +19,9 @@ class HomeController extends Controller
         $branchModel = new Branch;
         $branchModel->setConnection('branch');
         $branch = $branchModel->get();
-
-        $from = Carbon::createFromDate(2019, 5, 2)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 5, 30)->format('Y-m-d');
+        
+        $from = Carbon::createFromDate(2019, 8, 2)->format('Y-m-d');
+        $to = Carbon::createFromDate(2019, 10, 2)->format('Y-m-d');
 
         $dbId = "000";
         $config = Config::get('database.connections.sqlsrv');
@@ -31,11 +31,11 @@ class HomeController extends Controller
 
         $userInfo = new UserInfo;
 
-        $logIn = $userInfo->SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
-        $logOut = $userInfo->SelectLog()->where('name', 'like', '%ann%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+        $logIn = $userInfo->SelectLog()->where('name', 'like', '%BRENDA%')->JoinCol()->CompareDate($from, $to)->TimeType('i')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+        $logOut = $userInfo->SelectLog()->where('name', 'like', '%BRENDA%')->JoinCol()->CompareDate($from, $to)->TimeType('o')->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         
-        // $logIn = $userInfo->SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
-        // $logOut = $userInfo->SelectLog()->JoinCol()->HrisId(78)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
+        // $logIn = $userInfo->SelectLog()->JoinCol()->HrisId(148)->CompareDate($from, $to)->TimeType('i')->OrderDate()->get();
+        // $logOut = $userInfo->SelectLog()->JoinCol()->HrisId(148)->CompareDate($from, $to)->TimeType('o')->OrderDate()->get();
         // dd($logIn, $logOut);
 
         $collection = collect([]);
@@ -55,7 +55,7 @@ class HomeController extends Controller
         $collection = $this->forEmployeeName($logIn, $logOut, $collection, $size, $move, $prevLogInDate, $prevLogOutDate);
         // dd($collection);
         $collection = $this->removeLastItem($collection, $logOut);
-        // dd($logIn, $logOut, $collection, $size, $move);
+        dd($logIn, $logOut, $collection, $size, $move);
 
         return view('index', compact('branch'));
     }
@@ -99,12 +99,12 @@ class HomeController extends Controller
                     // } else {
                     $this->pushCollection(
                         $collection,
-                        $logIn[$counter1]->userid,
-                        $logIn[$counter1]->Badgenumber,
+                        $logOut[$counter2]->userid,
+                        $logOut[$counter2]->Badgenumber,
                         $Date2[0],
                         "N/A",
                         $logOut[$counter2]->checktime,
-                        $logIn[$counter1]->name
+                        $logOut[$counter2]->name
                     );
                     $move += 1;
                     // }
@@ -191,9 +191,9 @@ class HomeController extends Controller
                             $logOut[$counter2]->userid,
                             $logOut[$counter2]->Badgenumber,
                             $Date2[0],
-                            "N/A",
+                            "wat",
                             $logOut[$counter2]->checktime,
-                            $logIn[$counter2]->name
+                            $logOut[$counter2]->name
                         );
                         $counter1 -= 1;
                     } 
@@ -204,13 +204,17 @@ class HomeController extends Controller
                             $logIn[$counter1]->Badgenumber,
                             $Date1[0],
                             $logIn[$counter1]->checktime,
-                            "N/A",
+                            "awd",
                             $logIn[$counter1]->name
                         );
                         $counter2 -= 1;
                     }
+                    // dd($collection,$prevLogOutDate);
                     $move += 1;
-                } elseif ($Date1[0] < $Date2[0]) {
+                } 
+                elseif ($Date1[0] < $Date2[0]) {
+                    // dd($prevLogOutDate, $count, $counter1, $counter2, explode(" ", $logOut[$counter2-1]['checktime'])[0]);
+                    // $prevLogOutDate = explode(" ", $logOut[$counter2-1]['checktime'])[0];
                     if ($Date1[0] == $prevLogInDate[0][0]) { // MULTIPLE LOG IN
                         $counter2 -= 1;
                     } elseif ($Date2[0] == $prevLogOutDate[0][0]) { // MULTIPLE LOG OUT
@@ -224,7 +228,8 @@ class HomeController extends Controller
                             $logOut[$counter2]->name
                         );
                         $counter1 -= 1;
-                    } elseif ($Date1[0] != $prevLogInDate[0][0]) {
+                    } 
+                    else {
                         $this->pushCollection(
                             $collection,
                             $logIn[$counter1]->userid,
@@ -236,18 +241,6 @@ class HomeController extends Controller
                         );
                         $counter2 -= 1;
                     }
-                    // else { // DIDN'T LOG IN
-                    //     $this->pushCollection(
-                    //         $collection,
-                    //         $logOut[$counter2]->userid,
-                    //         $logOut[$counter2]->Badgenumber,
-                    //         $Date2[0],
-                    //         "N/A",
-                    //         $logOut[$counter2]->checktime,
-                    //         $logOut[$counter2]->name
-                    //     );
-                    //     $counter1 -= 1;
-                    // }
                     $move += 1;
                 }
                 $prevLogInDate = [$Date1];

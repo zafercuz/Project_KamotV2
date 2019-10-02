@@ -28,6 +28,7 @@ $(document).ready(function () {
   chooseFilter.addEventListener('change', e => {
     let chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
     filterInput.value = "";
+    table.clear().draw();
     //IF BRANCH IS SELECTED, DISABLE INPUT FIELD
     if (chooseFilterValue === "2") {
       filterInput.placeholder = "";
