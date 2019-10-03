@@ -62,8 +62,6 @@ $(document).ready(function () {
       chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
     e.preventDefault();
 
-    console.log(chooseFilterValue);
-
     // VALIDATE FILTER INPUTS
     const validate = formValidate(errors, chooseFilterValue, todayDate);
 
@@ -99,7 +97,6 @@ $(document).ready(function () {
           errorMsgs.style.display = 'block';
         }
       });
-      console.log("AJAX");
     }
   });
 
@@ -271,8 +268,8 @@ $(document).ready(function () {
   const transformTable = data => {
     let collection = data.collection;
     collection.forEach(element => {
-      let formatIn = moment(element.logIn, 'YYYY-MM-DD HH:mm:ss'),
-          formatOut = moment(element.logOut, 'YYYY-MM-DD HH:mm:ss'),
+      let formatIn = moment(element[0].in, 'YYYY-MM-DD HH:mm:ss'),
+          formatOut = moment(element[0].out, 'YYYY-MM-DD HH:mm:ss'),
           textLogIn = "",
           textLogOut = "";
 
@@ -289,10 +286,10 @@ $(document).ready(function () {
       }
 
       table.row.add([
-        element.date,
+        element[0].date,
         textLogIn,
         textLogOut,
-        element.nameOrId,
+        element[0].name,
       ]).draw();
     });
   };
