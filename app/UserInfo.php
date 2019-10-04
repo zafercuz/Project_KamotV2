@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class UserInfo extends Model
 {
-    // protected $connection = 'sqlsrv';
     public $table = 'Userinfo';
 
     public function scopeGetUserId($query, $id)
@@ -28,11 +26,6 @@ class UserInfo extends Model
     public function scopeHrisId($query, $id)
     {
         return $query->where('checkinout.userid', $id);
-    }
-
-    public function scopeTimeType($query, $id)
-    {
-        return $query->where('checktype', $id);
     }
 
     public function scopeOrderDate($query)

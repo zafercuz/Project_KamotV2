@@ -20,8 +20,8 @@ class HomeController extends Controller
         $branchModel->setConnection('branch');
         $branch = $branchModel->get();
         
-        $from = Carbon::createFromDate(2019, 8, 2)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 9, 22)->format('Y-m-d');
+        $from = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
+        $to = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
 
         $dbId = "000";
         $config = Config::get('database.connections.sqlsrv');
@@ -32,18 +32,19 @@ class HomeController extends Controller
         $userInfo = new UserInfo;
 
         // $logs =  $userInfo->SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->OrderDate()->get();
-        $logs = $userInfo->SelectLog()->where('name', 'like', '%da%')->JoinCol()->CompareDate($from, $to)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+        // $logs =  $userInfo->SelectLog()->JoinCol()->CompareDate($from, $to)->orderBy('userinfo.userid', 'asc')->OrderDate()->take(51)->get();
+        // $logs = $userInfo->SelectLog()->where('name', 'like', '%da%')->JoinCol()->CompareDate($from, $to)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         // dd($logs);
 
         $collection = collect([]);
 
         // $collection = $this->dataHRISId($logs, $collection, $from, $to);
-        $collection = $this->dataEmployeeName($logs, $collection, $from, $to);
+        // $collection = $this->dataBranchEmployeeName($logs, $collection, $from, $to);
 
         return view('index', compact('branch'));
     }
 
-    public function dataHRISId($logs, $collection, $from, $to) 
+    public function dataHRISId($logs, $collection, $from, $to)
     {
         $currentDate = $from;
         while ($currentDate <= $to) {
@@ -53,10 +54,11 @@ class HomeController extends Controller
                 "date" => $currentDate,
                 "in" => "N/A",
                 "out" => "N/A",
-                "name" => $logs[0]['name']
+                "name" => $logs[0]['name'],
+                "badgeNumber" => $logs[0]['Badgenumber'],
                 ]);
-            
-            $queryDates = $logs->filter(function ($value, $key) use($currentDate) {
+
+            $queryDates = $logs->filter(function ($value, $key) use ($currentDate) {
                 return explode(" ", $value->checktime)[0] == $currentDate;
             })->values();
             
@@ -70,7 +72,7 @@ class HomeController extends Controller
             $firstIn = null;
             $lastOut = null;
 
-            if(count($ins) > 0){
+            if (count($ins) > 0) {
                 $firstIn = $ins[0]['checktime'];
                 for ($counter = 1; $counter < count($ins); $counter++) {
                     $element = $ins[$counter];
@@ -80,7 +82,7 @@ class HomeController extends Controller
                 }
             }
 
-            if(count($outs) > 0){
+            if (count($outs) > 0) {
                 $lastOut = $outs[0]['checktime'];
                 for ($counter = 1; $counter < count($outs); $counter++) {
                     $element = $outs[$counter];
@@ -102,13 +104,13 @@ class HomeController extends Controller
         return $collection;
     }
 
-    public function dataEmployeeName($logs, $collection, $from, $to) 
+    public function dataBranchEmployeeName($logs, $collection, $from, $to)
     {
-        $currentDate = $from;
+        $currentDate = $from; // Get start date
         $getUniqueIdName = collect([]);
         foreach ($logs as $key => $value) {
             if (!$getUniqueIdName->contains("id", $value->userid)) {
-                $getUniqueIdName->push(["id" => $value->userid, "name" => $value->name]);
+                $getUniqueIdName->push(["id" => $value->userid, "name" => $value->name, "badgeNumber" => $value->Badgenumber]);
             }
         }
         $idCounter = 0;
@@ -119,10 +121,11 @@ class HomeController extends Controller
                 "date" => $currentDate,
                 "in" => "N/A",
                 "out" => "N/A",
-                "name" => $getUniqueIdName[$idCounter]['name']
+                "name" => $getUniqueIdName[$idCounter]['name'],
+                "badgeNumber" => $getUniqueIdName[$idCounter]['badgeNumber'],
                 ]);
 
-            $queryDates = $logs->filter(function ($value, $key) use($currentDate, $getUniqueIdName, $idCounter) {
+            $queryDates = $logs->filter(function ($value, $key) use ($currentDate, $getUniqueIdName, $idCounter) {
                 return explode(" ", $value->checktime)[0] == $currentDate && $value->userid == $getUniqueIdName[$idCounter]['id'];
             })->values();
 
@@ -137,7 +140,7 @@ class HomeController extends Controller
             $firstIn = null;
             $lastOut = null;
 
-            if(count($ins) > 0){
+            if (count($ins) > 0) {
                 $firstIn = $ins[0]['checktime'];
                 for ($counter = 1; $counter < count($ins); $counter++) {
                     $element = $ins[$counter];
@@ -147,7 +150,7 @@ class HomeController extends Controller
                 }
             }
 
-            if(count($outs) > 0){
+            if (count($outs) > 0) {
                 $lastOut = $outs[0]['checktime'];
                 for ($counter = 1; $counter < count($outs); $counter++) {
                     $element = $outs[$counter];
@@ -172,7 +175,6 @@ class HomeController extends Controller
             } else {
                 $currentDate = Carbon::parse($currentDate)->addDay()->format('Y-m-d');
             }
-            
         }
         return $collection;
     }
@@ -186,28 +188,33 @@ class HomeController extends Controller
         DB::purge('sqlsrv');
 
         $userInfo = new UserInfo;
-        
+
         if ($request->chooseFilterValue === "1") {
             $userId = $userInfo->GetUserId($request->filterInput)->get(); // Get userId of user
             $logs =  $userInfo->SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)->OrderDate()->get();
+        } elseif ($request->chooseFilterValue === "2") {
+            $logs =  $userInfo->SelectLog()->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         } elseif ($request->chooseFilterValue === "3") {
             $logs = $userInfo->SelectLog()->where('name', 'like', '%'. $request->filterInput .'%')->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
-        } 
+        }
 
         $collection = collect([]);
+        $branchFilter = null;
 
         if ($request->chooseFilterValue === "1") {
             $collection = $this->dataHRISId($logs, $collection, $request->date1, $request->date2);
-        } elseif ($request->chooseFilterValue === "3") {
-            $collection = $this->dataEmployeeName($logs, $collection, $request->date1, $request->date2);
-        } 
+        } elseif ($request->chooseFilterValue === "2" || $request->chooseFilterValue === "3") {
+            if ($request->chooseFilterValue === "2") {
+                $branchFilter = 1; // BRANCH IS SELECTED
+            }
+            $collection = $this->dataBranchEmployeeName($logs, $collection, $request->date1, $request->date2);
+        }
 
-        return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection]);
+        return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'branchFilter' => $branchFilter]);
     }
 
     private function getExplodeDate($data)
     {
         return explode(" ", $data);
     }
-
 }

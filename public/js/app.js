@@ -58,14 +58,16 @@ $(document).ready(function () {
   Searchbtn.addEventListener('click', e => {
     let errors = [],
       messageHTML = "",
-      todayDate = moment().format('YYYY-MM-D'),
-      chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value;
+      todayDate = moment().format('YYYY-MM-DD'),
+      chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value,
+      cover_spin = document.querySelector('#cover-spin');
     e.preventDefault();
-
+    
     // VALIDATE FILTER INPUTS
     const validate = formValidate(errors, chooseFilterValue, todayDate);
 
     if (!validate) { // THERE ARE ERRORS
+      table.clear().draw();
       errorMsgs.style.display = 'block';
       displayError(errors, messageHTML);
     }
@@ -74,6 +76,7 @@ $(document).ready(function () {
       errorMsgs.style.display = 'none';
 
       table.clear().draw();
+      $(cover_spin).show(0);
       // AJAX REQUEST CALL FUNCTION HERE
       $.ajax({
         type: 'get',
@@ -87,6 +90,7 @@ $(document).ready(function () {
           'date2': date2.value,
         },
         success: function (data) {
+          $(cover_spin).hide(0);
           displayHrisId(chooseFilterValue);
           console.log(data);
           transformTable(data);
@@ -228,11 +232,13 @@ $(document).ready(function () {
     }
 
     if (date1.value > todayDate) {
+      console.log("date1 greate");
       errorStyleMsg(date1, errors, "Date 1 must not be greater than current date!");
       errorCount++;
     }
 
     if (date2.value > todayDate) {
+      console.log("date2 > today");
       errorStyleMsg(date2, errors, "Date 2 must not be greater than current date!");
       errorCount++;
     }
@@ -267,6 +273,7 @@ $(document).ready(function () {
    */
   const transformTable = data => {
     let collection = data.collection;
+    console.log(data.branchFilter);
     collection.forEach(element => {
       let formatIn = moment(element[0].in, 'YYYY-MM-DD HH:mm:ss'),
           formatOut = moment(element[0].out, 'YYYY-MM-DD HH:mm:ss'),
@@ -285,12 +292,21 @@ $(document).ready(function () {
         textLogOut = formatOut.format('hh:mm:ss A');
       }
 
-      table.row.add([
-        element[0].date,
-        textLogIn,
-        textLogOut,
-        element[0].name,
-      ]).draw();
+      if (data.branchFilter === 1) {
+        table.row.add([
+          element[0].date,
+          textLogIn,
+          textLogOut,
+          element[0].badgeNumber + " - " + element[0].name,
+        ]).draw();
+      } else {
+        table.row.add([
+          element[0].date,
+          textLogIn,
+          textLogOut,
+          element[0].name,
+        ]).draw();
+      }
     });
   };
 
