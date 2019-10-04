@@ -19,27 +19,6 @@ class HomeController extends Controller
         $branchModel = new Branch;
         $branchModel->setConnection('branch');
         $branch = $branchModel->get();
-        
-        $from = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
-        $to = Carbon::createFromDate(2019, 9, 2)->format('Y-m-d');
-
-        $dbId = "000";
-        $config = Config::get('database.connections.sqlsrv');
-        $config['database'] = "dtr_" . $dbId;
-        config()->set('database.connections.sqlsrv', $config);
-        DB::purge('sqlsrv');
-
-        $userInfo = new UserInfo;
-
-        // $logs =  $userInfo->SelectLog()->JoinCol()->HrisId(1)->CompareDate($from, $to)->OrderDate()->get();
-        // $logs =  $userInfo->SelectLog()->JoinCol()->CompareDate($from, $to)->orderBy('userinfo.userid', 'asc')->OrderDate()->take(51)->get();
-        // $logs = $userInfo->SelectLog()->where('name', 'like', '%da%')->JoinCol()->CompareDate($from, $to)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
-        // dd($logs);
-
-        $collection = collect([]);
-
-        // $collection = $this->dataHRISId($logs, $collection, $from, $to);
-        // $collection = $this->dataBranchEmployeeName($logs, $collection, $from, $to);
 
         return view('index', compact('branch'));
     }

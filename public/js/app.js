@@ -1,10 +1,4 @@
 $(document).ready(function () {
-  console.log("DTR!"); // JUST TO MAKE SURE JS IS RUNNING
-
-  // var mom = moment('2019-09-05 17:10:54.000', 'YYYY-MM-DD HH:mm:ss');
-  // console.log(mom);
-  // console.log(mom.format('hh:mm:ss A'));
-
   //BUTTON
   const Searchbtn = document.querySelector('#btnSearch');
 
@@ -92,11 +86,10 @@ $(document).ready(function () {
         success: function (data) {
           $(cover_spin).hide(0);
           displayHrisId(chooseFilterValue);
-          console.log(data);
           transformTable(data);
         },
         error: function (error) {
-          console.log(error);
+          $(cover_spin).hide(0);
           errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>"; // CLEAR THE ERROR LIST
           errorMsgs.style.display = 'block';
         }
@@ -232,13 +225,11 @@ $(document).ready(function () {
     }
 
     if (date1.value > todayDate) {
-      console.log("date1 greate");
       errorStyleMsg(date1, errors, "Date 1 must not be greater than current date!");
       errorCount++;
     }
 
     if (date2.value > todayDate) {
-      console.log("date2 > today");
       errorStyleMsg(date2, errors, "Date 2 must not be greater than current date!");
       errorCount++;
     }
@@ -273,7 +264,6 @@ $(document).ready(function () {
    */
   const transformTable = data => {
     let collection = data.collection;
-    console.log(data.branchFilter);
     collection.forEach(element => {
       let formatIn = moment(element[0].in, 'YYYY-MM-DD HH:mm:ss'),
           formatOut = moment(element[0].out, 'YYYY-MM-DD HH:mm:ss'),
