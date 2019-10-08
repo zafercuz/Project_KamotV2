@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/clock.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/Clock.ico') }}" />
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/gridSystem.css') }}">
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
