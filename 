@@ -1,0 +1,369 @@
+[33mcommit 85c2b426573a27aa238c96bb0dcbba7ead996bb8[m[33m ([m[1;36mHEAD -> [m[1;32mlaravel[m[33m)[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Fri Oct 4 09:59:19 2019 +0800
+
+    Done with getting data, finish up cleaning code
+    
+    Done with all of getting and setting the data to DOM, should remove
+    telescope
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   composer.json
+    modified:   composer.lock
+    modified:   public/css/gridSystem.css
+    modified:   public/js/app.js
+    modified:   resources/views/index.blade.php
+
+[33mcommit d5acdfeb4288e6de208844be25348bd5521a6449[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Thu Oct 3 18:01:59 2019 +0800
+
+    Done with HRIS ID & Employee Name filter
+    
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   public/js/app.js
+    new file:   storage/debugbar/.gitignore
+
+[33mcommit ce231c6ad81944a21dc1e15fd8a4e73c5236bb82[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Oct 2 17:57:59 2019 +0800
+
+    Employee name still not working
+    
+    Title says it all
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   composer.json
+    modified:   composer.lock
+    modified:   public/js/app.js
+
+[33mcommit 9dfc7944c9cefac77b19de0abdd18f7544eaeb84[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Tue Oct 1 18:00:25 2019 +0800
+
+    Modify employee query
+    
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   config/database.php
+
+[33mcommit 0de1b8f072c75515692e39df8a6178f8e7a1584e[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Mon Sep 30 17:55:44 2019 +0800
+
+    Set up multiple database connection (not complete)
+    
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   config/database.php
+
+[33mcommit d231039c88e35e7b1b29a9e55ea9d7aacbc787b9[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Mon Sep 30 15:06:11 2019 +0800
+
+    Done with employee query
+    
+    Done solving employee name query, should test if no bugs.
+    modified:   .env.example
+    modified:   app/Branch.php
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   config/database.php
+    modified:   public/js/app.js
+
+[33mcommit 63140826b1152c8ba54b89db8787a55ac8a88b22[m[33m ([m[1;31morigin/laravel[m[33m)[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Fri Sep 27 17:58:56 2019 +0800
+
+    Put if else statement for employee name
+    
+    new file:   app/Helpers/DatabaseConnection.php
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   public/js/app.js
+
+[33mcommit 6419c2fea09aa614b93f60f19bdc959f7ecfed1e[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Fri Sep 27 16:27:38 2019 +0800
+
+    Connect to branch database
+    
+    Connected now to branch database as the second database.
+    Placed branch name and code on select option on filter branch.
+    modified:   .env.example
+    new file:   app/Branch.php
+    modified:   app/CheckInOut.php
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   config/database.php
+    modified:   public/js/app.js
+    modified:   resources/views/index.blade.php
+
+[33mcommit ab2eaf10dc39763d1b67bdbadb5f1aeaa8fefadd[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Fri Sep 27 14:28:35 2019 +0800
+
+    Multiple logout entries still not yet functioning
+    
+    Multiple logout entries still not replaced by latest log out entry
+    modified:   app/Http/Controllers/HomeController.php
+    new file:   app/Providers/TelescopeServiceProvider.php
+    modified:   app/UserInfo.php
+    modified:   composer.json
+    modified:   composer.lock
+    modified:   config/app.php
+    new file:   config/telescope.php
+    modified:   public/js/app.js
+    new file:   public/vendor/telescope/app-dark.css
+    new file:   public/vendor/telescope/app.css
+    new file:   public/vendor/telescope/app.js
+    new file:   public/vendor/telescope/favicon.ico
+    new file:   public/vendor/telescope/mix-manifest.json
+
+[33mcommit 1780598bac7501d869d292f93c54607779ed9542[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Thu Sep 26 17:58:36 2019 +0800
+
+    Done with getting of data hris id
+    
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   public/js/app.js
+    modified:   resources/views/index.blade.php
+
+[33mcommit 6cad8ff365aac3304fd7253cecfdd1ebc738fe66[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Sep 25 17:55:10 2019 +0800
+
+    Done with Log In multiple entry issue
+    
+    Done with the multiple log in entry issue, log out next one.
+    modified:   app/Http/Controllers/HomeController.php
+
+[33mcommit 720e99ea1ba45fdc1d492a7ec5666e9774939867[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Sep 25 16:45:45 2019 +0800
+
+    Modify AJAX Controller and add error message
+    
+    Modified the ajax controller to receive HRIS ID and added an
+    error message if HRIS Id inputted does not have existing records in database.
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   public/js/app.js
+
+[33mcommit 10a56b365852215605a0a8689fda211e002d28ee[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Sep 25 15:36:53 2019 +0800
+
+    Parse date from 24 hour format to 12 hour format
+    
+    Parsed date from query to return a 12 hour time format excluding the date.
+    modified:   app/Http/Controllers/HomeController.php
+
+[33mcommit 9a3d8e5849c32550789e4bfbb45b42bb33ab8972[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Sep 25 15:19:25 2019 +0800
+
+    Modify getting of data (halfway through)
+    
+    Multiple log in/out entries still not yet coded.
+    getting of HRIS ID to query instead of userid still not yet coded also.
+    modified:   app/Http/Controllers/HomeController.php
+
+[33mcommit dffc4b72ad9952b32d107c1c3e2e9094d097bb06[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Wed Sep 25 14:31:48 2019 +0800
+
+    Modify getting of data
+    
+    Getting of the correct data halfway complete.
+    Still lacks for duplicate log entries, must be FILO (first in, last out)
+    modified:   app/Http/Controllers/HomeController.php
+    modified:   app/UserInfo.php
+    modified:   config/app.php
+    modified:   public/js/app.js
+
+[33mcommit 6e92725643322573fb0d5496261e08605489036e[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Tue Sep 24 17:55:11 2019 +0800
+
+    Add ajax and getting of data
+    
+    Added the queries for getting the necessary data,
+    added ajax but query still not functioning and still lacking.
+    new file:   app/CheckInOut.php
+    new file:   app/Http/Controllers/HomeController.php
+    new file:   app/UserInfo.php
+    modified:   public/js/app.js
+    modified:   resources/views/index.blade.php
+    modified:   resources/views/layouts/app.blade.php
+    modified:   routes/web.php
+
+[33mcommit 5b2b277d1cc5ce71bc0f07b1fbe504e79b5dfb52[m
+Merge: 7f2d892 735d802
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Tue Sep 24 09:33:02 2019 +0800
+
+    Merge branch 'laravel' of https://github.com/zafercuz/Project_KamotV2 into laravel
+
+[33mcommit 7f2d8927bd786fe82738b81e220201d25b958855[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Tue Sep 24 09:30:42 2019 +0800
+
+    Modify footer and modify table
+    
+    Modified the footer and the table to have 4 columns (added Log In & Log Out)
+    instead of Log Type. Removed the "Log Type" checkboxes.
+    modified:   public/js/app.js
+    modified:   resources/views/index.blade.php
+    modified:   resources/views/layouts/app.blade.php
+
+[33mcommit 735d802539b45fdb71cd4a3751e7f345255105f7[m
+Author: Michael Steven N. David <31025973+zafercuz@users.noreply.github.com>
+Date:   Tue Sep 24 08:31:38 2019 +0800
+
+    Update README.md
+
+[33mcommit e63aa8126ab3ab7cd8f890280a9a0bb37c9ce021[m
+Author: Michael Steven N. David <31025973+zafercuz@users.noreply.github.com>
+Date:   Tue Sep 24 08:21:55 2019 +0800
+
+    Update README.md
+
+[33mcommit 4a115737fef76a02a77c4f6277908eb44bf43f4a[m
+Author: Michael Steven N. David <31025973+zafercuz@users.noreply.github.com>
+Date:   Mon Sep 23 18:08:44 2019 +0800
+
+    Update README.md
+
+[33mcommit 84e45e7ecb96f204b1ce13d69b1928dfce0bf078[m
+Author: Your Name <beltondavid1@gmail.com>
+Date:   Mon Sep 23 18:05:33 2019 +0800
+
+    Add laravel files
+    
+    Added laravel files.
+    new file:   .editorconfig
+    new file:   .env.example
+    new file:   .gitattributes
+    new file:   .gitignore
+    new file:   .styleci.yml
+    new file:   app/Console/Kernel.php
+    new file:   app/Exceptions/Handler.php
+    new file:   app/Http/Controllers/Auth/ForgotPasswordController.php
+    new file:   app/Http/Controllers/Auth/LoginController.php
+    new file:   app/Http/Controllers/Auth/RegisterController.php
+    new file:   app/Http/Controllers/Auth/ResetPasswordController.php
+    new file:   app/Http/Controllers/Auth/VerificationController.php
+    new file:   app/Http/Controllers/Controller.php
+    new file:   app/Http/Kernel.php
+    new file:   app/Http/Middleware/Authenticate.php
+    new file:   app/Http/Middleware/CheckForMaintenanceMode.php
+    new file:   app/Http/Middleware/EncryptCookies.php
+    new file:   app/Http/Middleware/RedirectIfAuthenticated.php
+    new file:   app/Http/Middleware/TrimStrings.php
+    new file:   app/Http/Middleware/TrustProxies.php
+    new file:   app/Http/Middleware/VerifyCsrfToken.php
+    new file:   app/Providers/AppServiceProvider.php
+    new file:   app/Providers/AuthServiceProvider.php
+    new file:   app/Providers/BroadcastServiceProvider.php
+    new file:   app/Providers/EventServiceProvider.php
+    new file:   app/Providers/RouteServiceProvider.php
+    new file:   app/User.php
+    new file:   artisan
+    new file:   bootstrap/app.php
+    new file:   bootstrap/cache/.gitignore
+    new file:   composer.json
+    new file:   composer.lock
+    new file:   config/app.php
+    new file:   config/auth.php
+    new file:   config/broadcasting.php
+    new file:   config/cache.php
+    new file:   config/database.php
+    new file:   config/filesystems.php
+    new file:   config/hashing.php
+    new file:   config/logging.php
+    new file:   config/mail.php
+    new file:   config/queue.php
+    new file:   config/services.php
+    new file:   config/session.php
+    new file:   config/view.php
+    new file:   database/.gitignore
+    new file:   database/factories/UserFactory.php
+    new file:   database/migrations/2014_10_12_000000_create_users_table.php
+    new file:   database/migrations/2014_10_12_100000_create_password_resets_table.php
+    new file:   database/migrations/2019_08_19_000000_create_failed_jobs_table.php
+    new file:   database/seeds/DatabaseSeeder.php
+    new file:   package.json
+    new file:   phpunit.xml
+    new file:   public/.htaccess
+    new file:   public/css/bootstrap-grid.css
+    new file:   public/css/bootstrap-grid.css.map
+    new file:   public/css/bootstrap-grid.min.css
+    new file:   public/css/bootstrap-grid.min.css.map
+    new file:   public/css/bootstrap-reboot.css
+    new file:   public/css/bootstrap-reboot.css.map
+    new file:   public/css/bootstrap-reboot.min.css
+    new file:   public/css/bootstrap-reboot.min.css.map
+    new file:   public/css/bootstrap.css
+    new file:   public/css/bootstrap.css.map
+    new file:   public/css/bootstrap.min.css
+    new file:   public/css/bootstrap.min.css.map
+    new file:   public/css/dataTables.bootstrap4.min.css
+    new file:   public/css/gridSystem.css
+    new file:   public/css/icons.min.css
+    new file:   public/favicon.ico
+    new file:   public/images/Clock.ico
+    new file:   public/images/HondaLogo.png
+    new file:   public/images/MAPI LOGO.png
+    new file:   public/images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png
+    new file:   public/images/bmg_logo.png
+    new file:   public/index.php
+    new file:   public/js/app.js
+    new file:   public/js/bootstrap.bundle.js
+    new file:   public/js/bootstrap.bundle.js.map
+    new file:   public/js/bootstrap.bundle.min.js
+    new file:   public/js/bootstrap.bundle.min.js.map
+    new file:   public/js/bootstrap.js
+    new file:   public/js/bootstrap.js.map
+    new file:   public/js/bootstrap.min.js
+    new file:   public/js/bootstrap.min.js.map
+    new file:   public/js/dataTables.bootstrap4.min.js
+    new file:   public/js/jquery.dataTables.min.js
+    new file:   public/js/jquery.min.js
+    new file:   public/js/moment.min.js
+    new file:   public/js/popper.min.js
+    new file:   public/robots.txt
+    new file:   resources/js/app.js
+    new file:   resources/js/bootstrap.js
+    new file:   resources/lang/en/auth.php
+    new file:   resources/lang/en/pagination.php
+    new file:   resources/lang/en/passwords.php
+    new file:   resources/lang/en/validation.php
+    new file:   resources/sass/app.scss
+    new file:   resources/views/index.blade.php
+    new file:   resources/views/layouts/app.blade.php
+    new file:   routes/api.php
+    new file:   routes/channels.php
+    new file:   routes/console.php
+    new file:   routes/web.php
+    new file:   server.php
+    new file:   storage/app/.gitignore
+    new file:   storage/app/public/.gitignore
+    new file:   storage/framework/.gitignore
+    new file:   storage/framework/cache/.gitignore
+    new file:   storage/framework/cache/data/.gitignore
+    new file:   storage/framework/sessions/.gitignore
+    new file:   storage/framework/testing/.gitignore
+    new file:   storage/framework/views/.gitignore
+    new file:   storage/logs/.gitignore
+    new file:   tests/CreatesApplication.php
+    new file:   tests/Feature/ExampleTest.php
+    new file:   tests/TestCase.php
+    new file:   tests/Unit/ExampleTest.php
+    new file:   webpack.mix.js
+    new file:   yarn.lock
+
+[33mcommit 3dbad14d41d6bb5e26cb7a877afce5cde12def61[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/experimental[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Michael Steven N. David <31025973+zafercuz@users.noreply.github.com>
+Date:   Tue Sep 10 17:46:50 2019 +0800
+
+    Initial commit
