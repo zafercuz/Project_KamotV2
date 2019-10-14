@@ -16,7 +16,7 @@ If all prerequisites are met then follow this steps
 6. php artisan key:generate
 7. In the `.env` file fill in the `DB_HOST=sqlsrv`, `DB_PORT=1433`, `DB_DATABASE=`(leave blank), DB_USERNAME, DB_PASSWORD, and `DB_DATABASE_BRANCH=zbranch_office` options to match the credentials of the database
 
-(IF USING UBUNTU, AND SHOULD USE UBUNTU)
+(IF USING LINUX, AND SHOULD USE LINUX)
 
 8. sudo chown -R my-user:www-data /path/to/your/laravel/root/directory
 9. sudo find /path/to/your/laravel/root/directory -type f -exec chmod 664 {} \;
