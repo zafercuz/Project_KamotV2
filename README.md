@@ -10,7 +10,7 @@ If all prerequisites are met then follow this steps
 
 (SHOULD BE CD'D INSIDE DIRECTORY UP UNTIL THE LAST PART)
 
-3. git checkout laravel
+3. git checkout laravel (SKIP IF NOT DEVELOPING)
 4. composer install
 5. cp .env.example .env
 6. php artisan key:generate
