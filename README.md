@@ -18,9 +18,9 @@ If all prerequisites are met then follow this steps
 
 (IF USING LINUX, AND SHOULD USE LINUX)
 
-8. sudo chown -R my-user:www-data /path/to/your/laravel/root/directory
-9. sudo find /path/to/your/laravel/root/directory -type f -exec chmod 664 {} \;
-10. sudo find /path/to/your/laravel/root/directory -type d -exec chmod 775 {} \;
-11. sudo chgrp -R www-data storage bootstrap/cache
-12. sudo chmod -R ug+rwx storage bootstrap/cache
-13. git config core.filemode false
+8. `sudo chown -R my-user:www-data /path/to/your/laravel/root/directory`
+9. `sudo find /path/to/your/laravel/root/directory -type f -exec chmod 664 {} \;`
+10. `sudo find /path/to/your/laravel/root/directory -type d -exec chmod 775 {} \;`
+11. `sudo chgrp -R www-data storage bootstrap/cache`
+12. `sudo chmod -R ug+rwx storage bootstrap/cache`
+13. `git config core.filemode false`
