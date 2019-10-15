@@ -25,49 +25,52 @@
 </head>
 
 <body class="bg-light">
-  <!------------------------------------------------------------------------>
-  <!------------------------ HEADER & NAV CONTAINER ------------------------>
-  <!------------------------------------------------------------------------>
+  <div class="d-flex flex-column sticky-footer-wrapper">
+    <!------------------------------------------------------------------------>
+    <!------------------------ HEADER & NAV CONTAINER ------------------------>
+    <!------------------------------------------------------------------------>
 
-  <!-- Navigation Section -->
-  <nav class="navbar navbar-expand-lg navbar-light default-primary-color shadow-lg">
-    <div class="container">
-      <a class="navbar-brand" href="/"><img src="images/Clock.ico" width="45" height="45"
-          class="d-inline-block align-top" alt=""></a>
-    </div>
-  </nav>
-
-  <!-- Top section -->
-  <header>
-    <div class="container text-center mt-4">
-      <h1 class="display-4" id="headerDisplay">Daily Time Record</h2>
-    </div>
-  </header>
-
-
-  <!---------------------------------------------------------------->
-  <!------------------------ BODY CONTAINER ------------------------>
-  <!---------------------------------------------------------------->
-  <main>
-    @yield('content')
-  </main>
-
-  <footer>
-  <div class="container pt-4 pb-5" style="margin-top:100px;">
-    <div class="row text-center mt-3">
-      <div class="col">
-        <img src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
-          style="max-height: 75%;max-width: 75%;">
+    <!-- Navigation Section -->
+    <nav class="navbar navbar-expand-lg navbar-light default-primary-color shadow-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img src="images/Clock.ico" width="45" height="45"
+            class="d-inline-block align-top" alt=""></a>
       </div>
-      <div class="col">
-        <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 75%;max-width: 75%;">
+    </nav>
+
+    <!-- Top section -->
+    <header>
+      <div class="container text-center mt-4">
+        <h1 class="display-4" id="headerDisplay">Daily Time Record</h2>
       </div>
-      <div class="col">
-        <img src="{{ asset('images/MAPI LOGO.png') }}" style="max-height: 75%;max-width: 75%;">
+    </header>
+
+
+    <!---------------------------------------------------------------->
+    <!------------------------ BODY CONTAINER ------------------------>
+    <!---------------------------------------------------------------->
+    <main class="flex-fill">
+      @yield('content')
+    </main>
+
+    <footer>
+    <div class="container-fluid w-100 py-3">
+      <div class="row text-center">
+        <div class="col">
+          <img src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
+            style="max-height: 70%;max-width: 70%;">
+        </div>
+        <div class="col">
+          <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 70%;max-width: 70%;">
+        </div>
+        <div class="col">
+          <img src="{{ asset('images/MAPI LOGO.png') }}" style="max-height: 70%;max-width: 70%;">
+        </div>
       </div>
     </div>
+    </footer>
+    
   </div>
-  </footer>
 
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>

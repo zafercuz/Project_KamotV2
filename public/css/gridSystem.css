@@ -30,9 +30,13 @@
   border-color: #BDBDBD;
 }
 
-body {
-  /* background-color: #FFCCBC; */
+body, .sticky-footer-wrapper {
   font-family: Helvetica;
+  min-height:100vh;
+}
+
+.flex-fill {
+  flex:1 1 auto;
 }
 
 footer{
