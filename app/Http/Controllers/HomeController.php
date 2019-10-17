@@ -7,7 +7,6 @@ ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use DB;
 use App\UserInfo;
-use App\CheckInOut;
 use App\Branch;
 // use App\Helpers\DatabaseConnection;
 use Carbon\Carbon;
@@ -16,6 +15,16 @@ use Config;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $branchModel = new Branch;
@@ -163,12 +172,13 @@ class HomeController extends Controller
     public function SearchAjax(Request $request)
     {
         /* Set up database */
-        $config = Config::get('database.connections.sqlsrv');
+        $config = Config::get('database.connections.dtr');
         $config['database'] = "dtr_" . $request->filterBranch;
-        config()->set('database.connections.sqlsrv', $config);
-        DB::purge('sqlsrv');
+        config()->set('database.connections.dtr', $config);
+        DB::purge('dtr');
 
         $userInfo = new UserInfo;
+        $userInfo->setConnection('dtr');
 
         if ($request->chooseFilterValue === "1") {
             $userId = $userInfo->GetUserId($request->filterInput)->get(); // Get userId of user

@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Config;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,10 +51,27 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'hrisid' => ['required', 'digits:5', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ], [
+            'hrisid.required' => 'The HRIS ID field is required.',
+            'hrisid.digits' => 'The HRIS ID field must be numeric and exactly 5 digits.',
+            'hrisid.unique' => 'This HRIS ID has already been taken.',
+            'name.required' => 'The Name field is required.',
+            'name.string' => 'The Name field must be a string.',
+            'name.max' => 'The Name field must not exceed 255 characters.',
+            'email.required' => 'The Email is required.',
+            'email.string' => 'The Email field must be a string.',
+            'email.email' => 'The Email field needs to have a valid format.',
+            'email.max' => 'The Email field must not exceed 255 characters.',
+            'email.unique' => 'This Email is already taken.',
+            'password.required' => 'The Password field is required.',
+            'password.string' => 'The Password field must be a string.',
+            'password.max' => 'The Password field must have more than 8 characters.',
+            'password.confirmed' => 'The Password field needs to be confirmed.',
+       ]);
     }
 
     /**
@@ -64,6 +83,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'hrisid' => $data['hrisid'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

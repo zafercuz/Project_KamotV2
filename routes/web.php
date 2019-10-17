@@ -11,5 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/SearchAjax', 'HomeController@SearchAjax');
+
+Auth::routes(['verify' => true]);

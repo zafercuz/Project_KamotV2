@@ -25,7 +25,7 @@
               <option value="2">BRANCH</option>
               <option value="3">EMPLOYEE NAME</option>
             </select>
-            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
+            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" value="{{ $hrisId }}" disabled>
           </div>
         </div>
         <!-- ANOTHER COLUMN -->
