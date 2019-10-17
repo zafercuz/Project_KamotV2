@@ -54,22 +54,23 @@
     </main>
 
     <footer>
-    <div class="container-fluid w-100">
-      <div class="row text-center">
-        <div class="col">
-          <img src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
-            style="max-height: 70%;max-width: 70%;">
-        </div>
-        <div class="col">
-          <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 70%;max-width: 70%;">
-        </div>
-        <div class="col">
-          <img src="{{ asset('images/MAPI LOGO-min.png') }}" style="max-height: 80%;max-width: 80%;">
+      <div class="container-fluid w-100">
+        <div class="row text-center">
+          <div class="col">
+            <img
+              src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
+              style="max-height: 70%;max-width: 70%;">
+          </div>
+          <div class="col">
+            <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 70%;max-width: 70%;">
+          </div>
+          <div class="col">
+            <img src="{{ asset('images/MAPI LOGO-min.png') }}" style="max-height: 80%;max-width: 80%;">
+          </div>
         </div>
       </div>
-    </div>
     </footer>
-    
+
   </div>
 
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
