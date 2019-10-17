@@ -25,7 +25,7 @@
               <option value="2">BRANCH</option>
               <option value="3">EMPLOYEE NAME</option>
             </select>
-            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" value="{{ $hrisId }}" disabled>
+            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
           </div>
         </div>
         <!-- ANOTHER COLUMN -->
@@ -100,4 +100,5 @@
   </div>
 </div>
 <div id="cover-spin"></div>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 @endsection

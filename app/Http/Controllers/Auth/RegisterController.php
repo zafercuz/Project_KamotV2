@@ -7,8 +7,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Config;
-use DB;
+use App\Branch;
 
 class RegisterController extends Controller
 {
@@ -24,6 +23,15 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+
+    public function showRegistrationForm()
+    {
+        $branchModel = new Branch;
+        $branchModel->setConnection('branch');
+        $branch = $branchModel->orderBy('bname', 'asc')->get();
+
+        return view('auth.register', compact('branch'));
+    }
 
     /**
      * Where to redirect users after registration.
@@ -71,7 +79,7 @@ class RegisterController extends Controller
             'password.string' => 'The Password field must be a string.',
             'password.max' => 'The Password field must have more than 8 characters.',
             'password.confirmed' => 'The Password field needs to be confirmed.',
-       ]);
+        ]);
     }
 
     /**

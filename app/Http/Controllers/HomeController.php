@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $branchModel = new Branch;
         $branchModel->setConnection('branch');
-        $branch = $branchModel->get();
+        $branch = $branchModel->orderBy('bname', 'asc')->get();
 
         return view('index', compact('branch'));
     }
@@ -46,12 +46,12 @@ class HomeController extends Controller
                 "out" => "N/A",
                 "name" => $logs[0]['name'],
                 "badgeNumber" => $logs[0]['Badgenumber'],
-                ]);
+            ]);
 
             $queryDates = $logs->filter(function ($value, $key) use ($currentDate) {
                 return explode(" ", $value->checktime)[0] == $currentDate;
             })->values();
-            
+
             $ins = $queryDates->filter(function ($value, $key) {
                 return strtoupper($value->checktype) == 'I';
             })->values();
@@ -113,7 +113,7 @@ class HomeController extends Controller
                 "out" => "N/A",
                 "name" => $getUniqueIdName[$idCounter]['name'],
                 "badgeNumber" => $getUniqueIdName[$idCounter]['badgeNumber'],
-                ]);
+            ]);
 
             $queryDates = $logs->filter(function ($value, $key) use ($currentDate, $getUniqueIdName, $idCounter) {
                 return explode(" ", $value->checktime)[0] == $currentDate && $value->userid == $getUniqueIdName[$idCounter]['id'];
@@ -126,7 +126,7 @@ class HomeController extends Controller
             $outs = $queryDates->filter(function ($value, $key) {
                 return strtoupper($value->checktype) == 'O';
             })->values();
-            
+
             $firstIn = null;
             $lastOut = null;
 
@@ -155,11 +155,11 @@ class HomeController extends Controller
 
             $changeOut = $row->replaceRecursive([0 => ['out' => $lastOut ? $lastOut : 'N/A']]);
             $row = $changeOut;
-            
+
 
             $collection->push($row);
-            
-            if ($currentDate == $to && !($idCounter+1 == count($getUniqueIdName))) {
+
+            if ($currentDate == $to && !($idCounter + 1 == count($getUniqueIdName))) {
                 $idCounter += 1;
                 $currentDate = $from;
             } else {
@@ -186,7 +186,7 @@ class HomeController extends Controller
         } elseif ($request->chooseFilterValue === "2") {
             $logs =  $userInfo->SelectLog()->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         } elseif ($request->chooseFilterValue === "3") {
-            $logs = $userInfo->SelectLog()->where('name', 'like', '%'. $request->filterInput .'%')->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+            $logs = $userInfo->SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         }
 
         $collection = collect([]);

@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="{{ asset('css/gridSystem.css') }}">
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body class="bg-light">
@@ -31,10 +32,9 @@
     <!------------------------------------------------------------------------>
 
     <!-- Navigation Section -->
-    <nav class="navbar navbar-expand-lg navbar-light default-primary-color shadow-lg">
+    <nav class="navbar navbar-expand navbar-light default-primary-color shadow-lg">
       <div class="container">
-        <a class="navbar-brand" href="/"><img src="images/Clock.ico" width="45" height="45"
-          class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="/"><img src="{{ asset('images/Clock.ico') }}" width="45" height="45" class="d-inline-block align-top" alt=""></a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
@@ -113,13 +113,12 @@
 
   </div>
 
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+  
   <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 </body>
 
