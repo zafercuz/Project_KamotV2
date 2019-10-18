@@ -47,18 +47,20 @@
             <!-- Authentication Links -->
             @guest
             <li class="nav-item">
-              <a class="nav-link font-weight-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
+              <a class="nav-link font-weight-bold pr-3" href="{{ route('login') }}" style=" border-right: 5px solid #333;">
+                <i class="fa fa-sign-in"></i> {{ __('Login') }}</a>
             </li>
             @if (Route::has('register'))
             <li class="nav-item">
-              <a class="nav-link font-weight-bold" href="{{ route('register') }}">{{ __('Register') }}</a>
+              <a class="nav-link font-weight-bold pl-3" href="{{ route('register') }}">
+                <i class="fa fa-sign-out"></i> {{ __('Register') }}</a>
             </li>
             @endif
             @else
             <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->name }} <span class="caret"></span>
+                <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
