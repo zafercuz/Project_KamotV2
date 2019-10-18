@@ -6,7 +6,12 @@ $(document).ready(function () {
         email = document.querySelector('#email'),
         password = document.querySelector('#password'),
         confirmPassword = document.querySelector('#password-confirm'),
-        jsErrorMsg = document.querySelector('#jsErrorMsg');
+        jsErrorMsg = document.querySelector('#jsErrorMsg'),
+        exists = document.querySelector('#exists');
+
+    if (exists != null) {
+      hrisid.style.borderColor = "red";
+    }
 
     registerBtn.addEventListener('click', e => {
         jsErrorMsg.innerHTML = "You must select a branch.";

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Branch;
+use App\UserInfo;
+use Config;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -58,15 +61,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $config = Config::get('database.connections.dtr');
+        $config['database'] = "dtr_" . $data['branch'];
+        config()->set('database.connections.dtr', $config);
+        DB::purge('dtr');
+
         return Validator::make($data, [
-            'hrisid' => ['required', 'digits:5', 'unique:users'],
+            'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'hrisid.required' => 'The HRIS ID field is required.',
-            'hrisid.digits' => 'The HRIS ID field must be numeric and exactly 5 digits.',
+            'hrisid.digits' => 'The HRIS ID field must be exactly 5 digits.',
             'hrisid.unique' => 'This HRIS ID has already been taken.',
+            'hrisid.exists' => 'This HRIS ID does not exist in the database.',
             'name.required' => 'The Name field is required.',
             'name.string' => 'The Name field must be a string.',
             'name.max' => 'The Name field must not exceed 255 characters.',

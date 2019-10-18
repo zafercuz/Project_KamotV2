@@ -32,7 +32,7 @@
 
               <div class="col-md-6">
                 <input id="hrisid" type="text" class="form-control @error('hrisid') is-invalid @enderror" name="hrisid"
-                  value="{{ old('hrisid') }}" autocomplete="hrisid" autofocus disabled>
+                  value="{{ old('hrisid') }}" autocomplete="hrisid" disabled>
 
                 @error('hrisid')
                 <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
 
               <div class="col-md-6">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                  value="{{ old('name') }}" autocomplete="name" autofocus disabled>
+                  value="{{ old('name') }}" autocomplete="name" disabled>
 
                 @error('name')
                 <span class="invalid-feedback" role="alert">
