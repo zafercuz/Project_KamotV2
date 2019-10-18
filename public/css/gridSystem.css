@@ -35,6 +35,10 @@ body, .sticky-footer-wrapper {
   min-height:100vh;
 }
 
+.nav-link {
+  font-size: 18px;
+}
+
 .flex-fill {
   flex:1 1 auto;
 }

@@ -77,8 +77,6 @@ class RegisterController extends Controller
             'email.unique' => 'This Email is already taken.',
             'password.required' => 'The Password field is required.',
             'password.string' => 'The Password field must be a string.',
-            'password.max' => 'The Password field must have more than 8 characters.',
-            'password.confirmed' => 'The Password field needs to be confirmed.',
         ]);
     }
 

@@ -29,6 +29,17 @@ $(document).ready(function () {
         email.disabled = false;
         password.disabled = false;
         confirmPassword.disabled = false;
+
+        hrisid.addEventListener('input', numbersOnly, true);
+        name.addEventListener('input', lettersOnly, true);
     });
+
+    const numbersOnly = () => {
+      hrisid.value = hrisid.value.replace(/[^0-9.]/g, '').slice(0, 5).replace(/(\..*)\./g, '$1');
+    };
+
+    const lettersOnly = () => {
+      name.value = name.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
+    };
 
 });
