@@ -5,8 +5,13 @@ $(document).ready(function () {
     newPasswordConfirm = document.querySelector('#new-password-confirm'),
     newPassConfirmError = document.querySelector('#newPassConfirmError'),
     newPassError = document.querySelector('#newPassError'),
+    backEndNewPassError = document.querySelector('#backEndNewPassError');
     changePassBtn = document.querySelector('#changePassBtn');
 
+    /* CHANGE BORDER COLOR OF NEW PASS FIELD */
+    if (backEndNewPassError != null) {
+      newPassword.style.borderColor = "red";
+    }
 
     changePassBtn.addEventListener('click', e => {
       const rule = /^\S{8,}$/;
@@ -30,10 +35,12 @@ $(document).ready(function () {
         e.preventDefault();
         newPassword.style.borderColor = "red"; 
         newPassError.innerHTML = "This field must not be empty.";
+        backEndNewPassError.innerHTML = "";
       } else if (!newPassword.value.match(rule)) {
         e.preventDefault();
-        newPassword.style.borderColor = "red"; 
+        newPassword.style.borderColor = "red";
         newPassError.innerHTML = "This field must contain atleast 8 characters and must not have spaces.";
+        backEndNewPassError.innerHTML = "";
       } else {
         newPassword.style.borderColor = ""; 
         newPassError.innerHTML = "";

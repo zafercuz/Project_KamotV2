@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Branch;
-use App\UserInfo;
 use Config;
 use DB;
 
@@ -70,12 +69,12 @@ class RegisterController extends Controller
             'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^\S{8,}$/'],
         ], [
             'hrisid.required' => 'The HRIS ID field is required.',
             'hrisid.digits' => 'The HRIS ID field must be exactly 5 digits.',
             'hrisid.unique' => 'This HRIS ID has already been taken.',
-            'hrisid.exists' => 'This HRIS ID does not exist in the database.',
+            'hrisid.exists' => 'This HRIS ID does not exist in the selected branch.',
             'name.required' => 'The Name field is required.',
             'name.string' => 'The Name field must be a string.',
             'name.max' => 'The Name field must not exceed 255 characters.',
@@ -86,6 +85,7 @@ class RegisterController extends Controller
             'email.unique' => 'This Email is already taken.',
             'password.required' => 'The Password field is required.',
             'password.string' => 'The Password field must be a string.',
+            'password.regex' => 'The Password field must not have spaces.',
         ]);
     }
 

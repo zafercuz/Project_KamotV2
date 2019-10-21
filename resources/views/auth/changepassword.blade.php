@@ -46,7 +46,7 @@
 
                 <span id="newPassError" class="text-danger font-weight-bold" style="font-size:14px;"></span>
                 @if ($errors->has('new-password'))
-                <span class="help-block text-danger" style="font-size:14px;" id="newPassError">
+                <span class="help-block text-danger" style="font-size:14px;" id="backEndNewPassError">
                   <strong>{{ $errors->first('new-password') }}</strong>
                 </span>
                 @endif

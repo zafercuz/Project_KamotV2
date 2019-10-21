@@ -96,7 +96,7 @@ class HomeController extends Controller
     {
         $currentDate = $from; // Get start date
         $getUniqueIdName = collect([]);
-        foreach ($logs as $key => $value) {
+        foreach ($logs as $value) {
             if (!$getUniqueIdName->contains("id", $value->userid)) {
                 $getUniqueIdName->push(["id" => $value->userid, "name" => $value->name, "badgeNumber" => $value->Badgenumber]);
             }
@@ -178,6 +178,9 @@ class HomeController extends Controller
         $userInfo = new UserInfo;
         $userInfo->setConnection('dtr');
 
+        $collection = collect([]);
+        $branchFilter = null;
+
         if ($request->chooseFilterValue === "1") {
             $userId = $userInfo->GetUserId($request->filterInput)->get(); // Get userId of user
             $logs =  $userInfo->SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)->OrderDate()->get();
@@ -187,8 +190,6 @@ class HomeController extends Controller
             $logs = $userInfo->SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         }
 
-        $collection = collect([]);
-        $branchFilter = null;
 
         if ($request->chooseFilterValue === "1") {
             $collection = $this->dataHRISId($logs, $collection, $request->date1, $request->date2);
@@ -201,5 +202,4 @@ class HomeController extends Controller
 
         return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'branchFilter' => $branchFilter]);
     }
-
 }
