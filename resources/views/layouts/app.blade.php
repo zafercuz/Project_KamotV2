@@ -34,7 +34,8 @@
     <!-- Navigation Section -->
     <nav class="navbar navbar-expand navbar-light default-primary-color shadow-lg">
       <div class="container">
-        <a class="navbar-brand" href="/"><img src="{{ asset('images/Clock.ico') }}" width="45" height="45" class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="/"><img src="{{ asset('images/Clock.ico') }}" width="45" height="45"
+            class="d-inline-block align-top" alt=""></a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
@@ -47,7 +48,8 @@
             <!-- Authentication Links -->
             @guest
             <li class="nav-item">
-              <a class="nav-link font-weight-bold pr-3" href="{{ route('login') }}" style=" border-right: 5px solid #333;">
+              <a class="nav-link font-weight-bold pr-3" href="{{ route('login') }}"
+                style=" border-right: 5px solid #333;">
                 <i class="fa fa-sign-in"></i> {{ __('Login') }}</a>
             </li>
             @if (Route::has('register'))
@@ -58,12 +60,16 @@
             @endif
             @else
             <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" v-pre>
+              <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('changePassPage') }}">
+                  {{ __('Change Password') }}
+                </a>
+                
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
@@ -72,6 +78,9 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
                 </form>
+
+
+
               </div>
             </li>
             @endguest
@@ -115,7 +124,7 @@
 
   </div>
 
-  
+
   <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>

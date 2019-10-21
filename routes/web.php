@@ -15,3 +15,5 @@ Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/SearchAjax', 'HomeController@SearchAjax');
 
 Auth::routes(['verify' => true]);
+Route::get('/changepassword','ChangePassController@showChangePasswordForm')->name('changePassPage');
+Route::post('/changepassword','ChangePassController@changePassword')->name('changePassword');

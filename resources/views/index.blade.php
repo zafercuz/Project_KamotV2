@@ -100,5 +100,5 @@
   </div>
 </div>
 <div id="cover-spin"></div>
-<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/mainScripts/app.js') }}"></script>
 @endsection

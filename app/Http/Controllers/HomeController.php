@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\UserInfo;
 use App\Branch;
-// use App\Helpers\DatabaseConnection;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Config;
 
 class HomeController extends Controller
@@ -204,8 +202,4 @@ class HomeController extends Controller
         return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'branchFilter' => $branchFilter]);
     }
 
-    private function getExplodeDate($data)
-    {
-        return explode(" ", $data);
-    }
 }
