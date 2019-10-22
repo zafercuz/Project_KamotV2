@@ -19,6 +19,7 @@
           @endif
 
           <form method="POST" action="{{ route('changePassword') }}">
+            @method('PATCH')
             @csrf
 
             <div class="form-group row">

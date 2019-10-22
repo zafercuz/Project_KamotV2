@@ -110,13 +110,13 @@
           <div class="col">
             <img
               src="{{ asset('images/^AB131B9BFFCE272C922BFD7FA1DFB26C48FCDB5C789CD78658^pimgpsh_fullsize_distr (2).png') }}"
-              style="max-height: 70%;max-width: 70%;">
+              style="max-height: 65%;max-width: 65%;">
           </div>
           <div class="col">
-            <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 70%;max-width: 70%;">
+            <img src="{{ asset('images/bmg_logo.png') }}" style="max-height: 65%;max-width: 65%;">
           </div>
           <div class="col">
-            <img src="{{ asset('images/MAPI LOGO-min.png') }}" style="max-height: 80%;max-width: 80%;">
+            <img src="{{ asset('images/MAPI LOGO-min.png') }}" style="max-height: 75%;max-width: 75%;">
           </div>
         </div>
       </div>

@@ -18,7 +18,8 @@
                 <select class="form-control" name="branch" id="branch">
                   <option selected="" disabled="" value="">Choose Branch</option>
                   @foreach ($branch as $item)
-                  <option value={{ $item->bcode }}>{{ $item->bname }}</option>
+                  <option value={{ $item->bcode }} {{ old('branch') == $item->bcode ? 'selected' : '' }}>
+                    {{ $item->bname }}</option>
                   @endforeach
                 </select>
 

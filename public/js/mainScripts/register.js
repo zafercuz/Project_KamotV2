@@ -9,12 +9,19 @@ $(document).ready(function () {
         jsErrorMsg = document.querySelector('#jsErrorMsg'),
         exists = document.querySelector('#exists');
 
+    if (branch.value != "") {
+        hrisid.disabled = false;
+        name.disabled = false;
+        email.disabled = false;
+        password.disabled = false;
+        confirmPassword.disabled = false;
+    }
+
     if (exists != null) {
-      hrisid.style.borderColor = "red";
+        hrisid.style.borderColor = "red";
     }
 
     registerBtn.addEventListener('click', e => {
-        jsErrorMsg.innerHTML = "You must select a branch.";
         if (branch.value == "") {
             e.preventDefault();
             branch.style.borderColor = "red";
@@ -40,11 +47,11 @@ $(document).ready(function () {
     });
 
     const numbersOnly = () => {
-      hrisid.value = hrisid.value.replace(/[^0-9.]/g, '').slice(0, 5).replace(/(\..*)\./g, '$1');
+        hrisid.value = hrisid.value.replace(/[^0-9.]/g, '').slice(0, 5).replace(/(\..*)\./g, '$1');
     };
 
     const lettersOnly = () => {
-      name.value = name.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
+        name.value = name.value.replace(/[^a-z\s.]/gi, '').replace(/(\..*)\./g, '$1');
     };
 
 });
