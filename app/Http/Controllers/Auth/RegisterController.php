@@ -68,7 +68,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hondamotorworld)\.com$/i'],
             'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^\S{8,}$/'],
         ], [
             'hrisid.required' => 'The HRIS ID field is required.',
@@ -83,6 +83,7 @@ class RegisterController extends Controller
             'email.email' => 'The Email field needs to have a valid format.',
             'email.max' => 'The Email field must not exceed 255 characters.',
             'email.unique' => 'This Email is already taken.',
+            'email.regex' => 'This Email field needs to have a valid format.',
             'password.required' => 'The Password field is required.',
             'password.string' => 'The Password field must be a string.',
             'password.regex' => 'The Password field must not have spaces.',
