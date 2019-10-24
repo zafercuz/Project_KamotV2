@@ -7,6 +7,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Branch;
+use Config;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -23,12 +26,21 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    public function showRegistrationForm()
+    {
+        $branchModel = new Branch;
+        $branchModel->setConnection('branch');
+        $branch = $branchModel->orderBy('bname', 'asc')->get();
+
+        return view('auth.register', compact('branch'));
+    }
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -48,10 +60,33 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $config = Config::get('database.connections.dtr');
+        $config['database'] = "dtr_" . $data['branch'];
+        config()->set('database.connections.dtr', $config);
+        DB::purge('dtr');
+
         return Validator::make($data, [
+            'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hondamotorworld)\.com$/i'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^\S{8,}$/'],
+        ], [
+            'hrisid.required' => 'The HRIS ID field is required.',
+            'hrisid.digits' => 'The HRIS ID field must be exactly 5 digits.',
+            'hrisid.unique' => 'This HRIS ID has already been taken.',
+            'hrisid.exists' => 'This HRIS ID does not exist in the selected branch.',
+            'name.required' => 'The Name field is required.',
+            'name.string' => 'The Name field must be a string.',
+            'name.max' => 'The Name field must not exceed 255 characters.',
+            'email.required' => 'The Email is required.',
+            'email.string' => 'The Email field must be a string.',
+            'email.email' => 'The Email field needs to have a valid format.',
+            'email.max' => 'The Email field must not exceed 255 characters.',
+            'email.unique' => 'This Email is already taken.',
+            'email.regex' => 'This Email field needs to have a valid format.',
+            'password.required' => 'The Password field is required.',
+            'password.string' => 'The Password field must be a string.',
+            'password.regex' => 'The Password field must not have spaces.',
         ]);
     }
 
@@ -64,6 +99,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'hrisid' => $data['hrisid'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
