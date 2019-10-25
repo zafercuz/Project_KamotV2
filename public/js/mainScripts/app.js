@@ -90,11 +90,11 @@ $(document).ready(function () {
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          if (error.responseJSON.message.includes("Undefined")) {
+          // if (error.responseJSON.message.includes("Undefined")) {
             errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>";
-          } else {
-            errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
-          }
+          // } else {
+          //   errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
+          // }
           errorMsgs.style.display = 'block';
         }
       });
