@@ -85,7 +85,6 @@ $(document).ready(function () {
         },
         success: function (data) {
           $(cover_spin).hide(0);
-          console.log(data);
           if (data.message === "") {
             displayHrisId(chooseFilterValue);
             transformTable(data);
@@ -97,7 +96,6 @@ $(document).ready(function () {
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          console.log(error);
           errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
           errorMsgs.style.display = 'block';
         }
