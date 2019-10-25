@@ -183,13 +183,18 @@ class HomeController extends Controller
 
         if ($request->chooseFilterValue === "1") {
             $userId = $userInfo->GetUserId($request->filterInput)->get(); // Get userId of user
+            if (count($userId) == 0) {
+                return response()->json(['message' => "no data found"]);
+            }
             $logs =  $userInfo->SelectLog()->JoinCol()->HrisId($userId[0]->userid)->CompareDate($request->date1, $request->date2)->OrderDate()->get();
         } elseif ($request->chooseFilterValue === "2") {
             $logs =  $userInfo->SelectLog()->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
         } elseif ($request->chooseFilterValue === "3") {
             $logs = $userInfo->SelectLog()->where('name', 'like', '%' . $request->filterInput . '%')->JoinCol()->CompareDate($request->date1, $request->date2)->orderBy('userinfo.userid', 'asc')->OrderDate()->get();
+            if (count($logs) == 0) {
+                return response()->json(['message' => "no data found"]);
+            }
         }
-
 
         if ($request->chooseFilterValue === "1") {
             $collection = $this->dataHRISId($logs, $collection, $request->date1, $request->date2);
@@ -200,6 +205,6 @@ class HomeController extends Controller
             $collection = $this->dataBranchEmployeeName($logs, $collection, $request->date1, $request->date2);
         }
 
-        return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'branchFilter' => $branchFilter]);
+        return response()->json(['filterType' => $request->chooseFilterValue, 'collection' => $collection, 'branchFilter' => $branchFilter, 'message' => ""]);
     }
 }
