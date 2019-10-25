@@ -85,16 +85,20 @@ $(document).ready(function () {
         },
         success: function (data) {
           $(cover_spin).hide(0);
-          displayHrisId(chooseFilterValue);
-          transformTable(data);
+          console.log(data);
+          if (data.message === "") {
+            displayHrisId(chooseFilterValue);
+            transformTable(data);
+          } else {
+            hrisIdPopup.style.display = 'none';
+            errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>";  
+            errorMsgs.style.display = 'block';
+          }
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          // if (error.responseJSON.message.includes("Undefined")) {
-            errorMsgs.querySelector("ul").innerHTML = "<li>No data found</li>";
-          // } else {
-          //   errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
-          // }
+          console.log(error);
+          errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
           errorMsgs.style.display = 'block';
         }
       });
