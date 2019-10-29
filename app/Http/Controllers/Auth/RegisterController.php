@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Branch;
 use Config;
 use DB;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -64,11 +65,17 @@ class RegisterController extends Controller
         $config['database'] = "dtr_" . $data['branch'];
         config()->set('database.connections.dtr', $config);
         DB::purge('dtr');
-
+        
         return Validator::make($data, [
             'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hondamotorworld)\.com$/i'],
+            'email' => [
+                'required', 'string', 'email', 'max:255', 'unique:users',
+                'regex:/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hondamotorworld)\.com$/i',
+                Rule::exists('email_address', 'EmailAddress')->where(function ($query) use($data){
+                    $query->where('EmployeeCode', $data['hrisid']);
+                }),
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^\S{8,}$/'],
         ], [
             'hrisid.required' => 'The HRIS ID field is required.',
@@ -84,6 +91,7 @@ class RegisterController extends Controller
             'email.max' => 'The Email field must not exceed 255 characters.',
             'email.unique' => 'This Email is already taken.',
             'email.regex' => 'This Email field needs to have a valid format.',
+            'email.exists' => "This Email does not match the inputted HRIS ID",
             'password.required' => 'The Password field is required.',
             'password.string' => 'The Password field must be a string.',
             'password.regex' => 'The Password field must not have spaces.',
