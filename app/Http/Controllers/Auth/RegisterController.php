@@ -71,7 +71,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required', 'string', 'email', 'max:255', 'unique:users',
-                'regex:/^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hondamotorworld)\.com$/i',
                 Rule::exists('email_address', 'EmailAddress')->where(function ($query) use($data){
                     $query->where('EmployeeCode', $data['hrisid']);
                 }),
@@ -90,7 +89,6 @@ class RegisterController extends Controller
             'email.email' => 'The Email field needs to have a valid format.',
             'email.max' => 'The Email field must not exceed 255 characters.',
             'email.unique' => 'This Email is already taken.',
-            'email.regex' => 'This Email field needs to have a valid format.',
             'email.exists' => "This Email does not match the inputted HRIS ID",
             'password.required' => 'The Password field is required.',
             'password.string' => 'The Password field must be a string.',
