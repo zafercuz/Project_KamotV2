@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <small class="text-danger font-weight-bold">
-        Note: Email address should be the email you registered when you started working, contact IT support if there's any problem
+        Note: Email address should be the email you registered in HRIS, contact IT support if there's any problem
       </small>
       <div class="card">
         <div class="card-header">{{ __('Register') }}</div>
