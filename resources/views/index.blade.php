@@ -10,6 +10,9 @@
 
     </ul>
   </div>
+  <small class="text-muted font-weight-bold">
+    Note: Only your FIRST IN and LAST OUT are displayed on the results table
+  </small>
   <!-- FILTER TABLE SECTION -->
   <form class="form-inline filterForm">
     <div class="container py-2" id="filterTable">

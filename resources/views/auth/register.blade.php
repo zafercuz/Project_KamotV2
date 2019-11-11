@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mb-5">
+<div class="container mb-5 pb-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
+      <small class="text-danger font-weight-bold">
+        Note: Email address should be the email you registered when you started working, contact IT support if there's any problem
+      </small>
       <div class="card">
         <div class="card-header">{{ __('Register') }}</div>
 
