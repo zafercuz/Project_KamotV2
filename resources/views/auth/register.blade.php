@@ -4,9 +4,18 @@
 <div class="container mb-5 pb-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <small class="text-danger font-weight-bold">
-        Note: Email address should be the email you registered in HRIS, contact IT support if there's any problem
-      </small>
+      <div class="alert alert-info">
+        <h5>Requirements</h5>
+        <small class="font-weight-bold">
+          <ul>
+            <li>HRIS ID must be present at selected branch</li>
+            <li>Email address should be the email you registered in HRIS</li>
+            <li>Email address should match your inputted HRIS ID</li>
+            <li>Password must at least be 8 characters length</li>
+          </ul>
+          Contact IT support if there is any problem
+        </small>
+      </div>
       <div class="card">
         <div class="card-header">{{ __('Register') }}</div>
 
