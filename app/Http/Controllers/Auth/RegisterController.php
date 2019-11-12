@@ -86,7 +86,7 @@ class RegisterController extends Controller
             'name.max' => 'The Name field must not exceed 255 characters.',
             'email.required' => 'The Email is required.',
             'email.string' => 'The Email field must be a string.',
-            'email.email' => 'The Email field needs to have a valid format.',
+            'email.email' => 'The Email field needs to have a valid email format.',
             'email.max' => 'The Email field must not exceed 255 characters.',
             'email.unique' => 'This Email is already taken.',
             'email.exists' => "This Email does not match the inputted HRIS ID",
