@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'hrisid' => ['required', 'digits:5', 'unique:users', 'exists:dtr.USERINFO,Badgenumber'],
             'name' => ['required', 'string', 'max:255'],
             'email' => [
-                'required', 'string', 'email', 'max:255', 'unique:users',
+                'required', 'string', 'email', 'max:255',
                 Rule::exists('email_address', 'EmailAddress')->where(function ($query) use($data){
                     $query->where('EmployeeCode', $data['hrisid']);
                 }),

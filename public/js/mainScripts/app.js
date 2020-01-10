@@ -96,7 +96,7 @@ $(document).ready(function () {
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          errorMsgs.querySelector("ul").innerHTML = "<li>Maximum time of execution reached, cannot display output</li>";
+          errorMsgs.querySelector("ul").innerHTML = "<li>No data found within that date or maximum time of execution reached, cannot display output</li>";
           errorMsgs.style.display = 'block';
         }
       });
