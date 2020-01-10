@@ -96,7 +96,11 @@ $(document).ready(function () {
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          errorMsgs.querySelector("ul").innerHTML = "<li>No data found within that date or maximum time of execution reached, cannot display output</li>";
+          text = "";
+          text += "<li>No data found within that date</li>";
+          text += "<li>Maximum time of execution reached, cannot display output. Select a shorter date of range</li>";
+          text += "<li>Session timeout due to 1 hour of inactivity, refresh page and login again</li>";
+          errorMsgs.querySelector("ul").innerHTML = text;
           errorMsgs.style.display = 'block';
         }
       });

@@ -5,7 +5,7 @@
 <div class="container mt-4 mb-5">
   <!-- Error Message section -->
   <div class="container errorMsgs">
-    <h5>Error List</h5>
+    <h5>Error List (Errors might be due to)</h5>
     <ul class="errorList">
 
     </ul>
