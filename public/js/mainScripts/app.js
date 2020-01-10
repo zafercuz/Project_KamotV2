@@ -96,7 +96,7 @@ $(document).ready(function () {
         },
         error: function (error) {
           $(cover_spin).hide(0);
-          text = "";
+          let text = "";
           text += "<li>No data found within that date</li>";
           text += "<li>Maximum time of execution reached, cannot display output. Select a shorter date of range</li>";
           text += "<li>Session timeout due to 1 hour of inactivity, refresh page and login again</li>";
