@@ -103,5 +103,12 @@
   </div>
 </div>
 <div id="cover-spin"></div>
+
+@endsection
+
+@section('extraJS')
+
+<script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/mainScripts/app.js') }}"></script>
+
 @endsection

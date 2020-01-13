@@ -21,8 +21,8 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/gridSystem.css') }}">
   <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body class="bg-light">
@@ -124,12 +124,13 @@
 
   </div>
 
-
+  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+  @yield('extraJS')
 
 </body>
 
