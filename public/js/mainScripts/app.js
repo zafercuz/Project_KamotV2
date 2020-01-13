@@ -18,6 +18,8 @@ $(document).ready(function () {
     hrisIdPopup = document.querySelector('#hrisIdPopup'),
     hrisID = document.querySelector('#hrisID');
 
+  let timer;
+
   // set date to 1 month only
   $(date1).datepicker({ 
     dateFormat: "yy-mm-dd",
@@ -72,7 +74,10 @@ $(document).ready(function () {
       todayDate = moment().format('YYYY-MM-DD'),
       chooseFilterValue = chooseFilter.options[chooseFilter.selectedIndex].value,
       cover_spin = document.querySelector('#cover-spin');
+
     e.preventDefault();
+    clearTimeout(timer);
+    
     // VALIDATE FILTER INPUTS
     const validate = formValidate(errors, chooseFilterValue, todayDate);
 
@@ -325,7 +330,7 @@ $(document).ready(function () {
       }
     });
 
-    setTimeout(clearTable, 600000);
+    timer = setTimeout(clearTable, 600000);
 
   };
 
