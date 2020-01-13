@@ -24,28 +24,28 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-    $this->validate($request, [
-        'login'    => 'required',
-        'password' => 'required',
-    ]);
-
-    $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
-        ? 'email' 
-        : 'hrisid';
-
-    $request->merge([
-        $login_type => $request->input('login')
-    ]);
-
-    if (Auth::attempt($request->only($login_type, 'password'))) {
-        return redirect()->intended($this->redirectPath());
-    }
-
-    return redirect()->back()
-        ->withInput()
-        ->withErrors([
-            'login' => 'These credentials do not match our records.',
+        $this->validate($request, [
+            'login'    => 'required',
+            'password' => 'required',
         ]);
+
+        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
+            ? 'email' 
+            : 'hrisid';
+
+        $request->merge([
+            $login_type => $request->input('login')
+        ]);
+
+        if (Auth::attempt($request->only($login_type, 'password'))) {
+            return redirect()->intended($this->redirectPath());
+        }
+
+        return redirect()->back()
+            ->withInput()
+            ->withErrors([
+                'login' => 'These credentials do not match our records.',
+            ]);
     }
 
     /**
