@@ -51,9 +51,9 @@
         <div class="col">
           <div class="d-sm-flex align-items-baseline">
             <span class="col-label mr-2">Date Range:</span>
-            <input type="date" class="form-control form-control-sm" id="date1">
+            <input type="text" class="form-control form-control-sm" id="date1" placeholder="1st Date" maxlength="10">
             <i class="fa fa-calendar mx-1"></i>
-            <input type="date" class="form-control form-control-sm mr-sm-2" id="date2">
+            <input type="text" class="form-control form-control-sm mr-sm-2" id="date2" placeholder="2nd Date" maxlength="10">
           </div>
         </div>
       </div>

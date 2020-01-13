@@ -23,12 +23,16 @@ $(document).ready(function () {
     dateFormat: "yy-mm-dd",
     maxDate: 0,
     minDate: "-3m",
+    showOtherMonths: true,
+    selectOtherMonths: true,
   });
 
   $(date2).datepicker({
     dateFormat: "yy-mm-dd",
     maxDate: 0,
     minDate: "-3m",
+    showOtherMonths: true,
+    selectOtherMonths: true,
   });
     
   // EVENT LISTENERS
@@ -320,6 +324,13 @@ $(document).ready(function () {
         ]).draw();
       }
     });
+
+    setTimeout(clearTable, 600000);
+
+  };
+
+  const clearTable = () => {
+    table.clear().draw();
   };
 
 });
