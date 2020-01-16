@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\UserLog;
 
 class LoginController extends Controller
 {
@@ -46,8 +47,11 @@ class LoginController extends Controller
      * @param  mixed  $user
      * @return mixed
      */
-    protected function authenticated()
+    protected function authenticated(Request $request)
     {
+        UserLog::create([
+            'hrisid' => $request['hrisid'],
+        ]);
         Auth::logoutOtherDevices(request('password'));
     }
 
@@ -67,7 +71,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only($login_type, 'password'))) {
-            $this->authenticated();
+            $this->authenticated($request);
 
             return redirect()->intended($this->redirectPath());
         }
