@@ -78,5 +78,11 @@
     </div>
   </div>
 </div>
+
+@endsection
+
+@section('extraJS')
+
 <script type="text/javascript" src="{{ asset('js/mainScripts/changePass.js') }}"></script>
+
 @endsection
