@@ -16,7 +16,8 @@ class CreateUserLogs extends Migration
         Schema::create('user_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('hrisid', 5);
-            $table->timestamps();
+            $table->dateTime('login_at')->nullable();
+            $table->dateTime('logout_at')->nullable();
         });
     }
 

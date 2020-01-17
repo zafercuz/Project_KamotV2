@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\UserLog;
+use Carbon\Carbon;
+use Session;
 
 class LoginController extends Controller
 {
@@ -49,9 +51,12 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request)
     {
+        $current_date_time = Carbon::now()->toDateTimeString();
         UserLog::create([
             'hrisid' => $request['hrisid'],
+            'login_at' => $current_date_time,
         ]);
+        $request->session()->put('hrisid', $request['hrisid']);
         Auth::logoutOtherDevices(request('password'));
     }
 
@@ -81,6 +86,37 @@ class LoginController extends Controller
             ->withErrors([
                 'login' => 'These credentials do not match our records.',
             ]);
+    }
+
+    public function logout(Request $request)
+    {
+        // ****** Set up variable to session 'HRIS ID' ****** //
+        $hrisid = $request->session()->get('hrisid');
+
+        $this->guard()->logout(); // Log outs User
+
+        $request->session()->invalidate(); // Flush the session data and regenerate the ID.
+
+        $request->session()->put('hrisid', $hrisid); // Put hris id to session
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        $hrisid = $request->session()->pull('hrisid');
+        $request->session()->invalidate(); // Flush the session data and regenerate the ID.
+        $current_date_time = Carbon::now()->toDateTimeString();
+        $query = UserLog::where('hrisid', $hrisid)
+                ->latest('login_at')
+                ->first()
+                ->update(['logout_at' => $current_date_time]);
     }
 
 }
