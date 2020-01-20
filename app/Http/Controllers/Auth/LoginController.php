@@ -110,13 +110,15 @@ class LoginController extends Controller
      */
     protected function loggedOut(Request $request)
     {
-        $hrisid = $request->session()->pull('hrisid');
-        $request->session()->invalidate(); // Flush the session data and regenerate the ID.
-        $current_date_time = Carbon::now()->toDateTimeString();
-        $query = UserLog::where('hrisid', $hrisid)
-                ->latest('login_at')
-                ->first()
-                ->update(['logout_at' => $current_date_time]);
+        if ($request->session()->has('hrisid')) {
+            $hrisid = $request->session()->pull('hrisid');
+            $request->session()->invalidate(); // Flush the session data and regenerate the ID.
+            $current_date_time = Carbon::now()->toDateTimeString();
+            $query = UserLog::where('hrisid', $hrisid)
+                    ->latest('login_at')
+                    ->first()
+                    ->update(['logout_at' => $current_date_time]);
+        }
     }
 
 }
