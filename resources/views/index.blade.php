@@ -23,12 +23,19 @@
           <div class="d-sm-flex align-items-baseline">
             <span class="col-label mr-2">Filter:</span>
             <select class="form-control custom-select mr-sm-2 custom-select-sm" id="chooseFilter">
+            @if (Auth::user()->staff_status)
               <option selected="" disabled="" value="">Choose Filter</option>
               <option value="1">HRIS ID</option>
               <option value="2">BRANCH</option>
               <option value="3">EMPLOYEE NAME</option>
             </select>
             <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled>
+            @else
+              <option value="1" selected disabled>HRIS ID</option>
+            </select>
+            <input type="text" class="form-control form-control-sm" id="filterInput" placeholder="" disabled
+              value="{{ Auth::user()->hrisid }}">
+            @endif
           </div>
         </div>
         <!-- ANOTHER COLUMN -->
@@ -53,7 +60,8 @@
             <span class="col-label mr-2">Date Range:</span>
             <input type="text" class="form-control form-control-sm" id="date1" placeholder="1st Date" maxlength="10">
             <i class="fa fa-calendar mx-1"></i>
-            <input type="text" class="form-control form-control-sm mr-sm-2" id="date2" placeholder="2nd Date" maxlength="10">
+            <input type="text" class="form-control form-control-sm mr-sm-2" id="date2" placeholder="2nd Date"
+              maxlength="10">
           </div>
         </div>
       </div>
