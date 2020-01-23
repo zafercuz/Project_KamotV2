@@ -81,7 +81,7 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '122.54.23.52'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
@@ -94,7 +94,7 @@ return [
         'dtr' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '122.54.23.52'),
             'port' => env('DB_PORT', '1433'),
             'database' => "",
             'username' => env('DB_USERNAME', 'forge'),
@@ -107,7 +107,7 @@ return [
         'branch' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', '122.54.23.52'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE_BRANCH', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
