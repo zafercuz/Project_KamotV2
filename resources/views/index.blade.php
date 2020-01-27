@@ -12,6 +12,8 @@
   </div>
   <small class="text-muted font-weight-bold">
     Note: Only your FIRST IN and LAST OUT are displayed on the results table
+    <br>
+    Note #2: Contact IT Support if you require access to "Branch" logs
   </small>
   <!-- FILTER TABLE SECTION -->
   <form class="form-inline filterForm">
