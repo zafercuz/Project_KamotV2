@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container mt-4 mb-5">
+<div class="container mb-5">
   <!-- Error Message section -->
   <div class="container errorMsgs">
     <h5>Error List (Errors might be due to)</h5>
@@ -10,11 +10,12 @@
 
     </ul>
   </div>
-  <small class="text-muted font-weight-bold">
-    Note: Only your FIRST IN and LAST OUT are displayed on the results table
+  <div class="lead text-white bg-info border rounded mb-2">
+    <span class="ml-2">Note: Only your FIRST IN and LAST OUT are displayed on the results table</span>
     <br>
-    Note #2: Contact IT Support if you require access to "Branch" logs
-  </small>
+    <span class="ml-2">Note #2: Contact IT Support if you require access to "Branch" or other HRIS ID logs</span>
+  </div>
+  
   <!-- FILTER TABLE SECTION -->
   <form class="form-inline filterForm">
     <div class="container py-2" id="filterTable">
